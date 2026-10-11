@@ -35,19 +35,6 @@ export const LoginView = () => {
     redirectAfterLogin(user);
   };
 
-  const handleDemoLogin = async (demoEmail, demoRole) => {
-    setEmail(demoEmail);
-    setPass("demo123");
-    setRole(demoRole);
-    const result = await login(demoEmail, "demo123", demoRole);
-    if (result.success) {
-      showToast(`Logged in as ${result.user.name} (${result.user.role})`, "ok");
-      redirectAfterLogin(result.user);
-    } else {
-      showToast(result.message, "bad");
-    }
-  };
-
   const openForgotPasswordModal = () => {
     openModal(<ForgotPasswordModal onDone={closeModal} />);
   };
@@ -194,51 +181,23 @@ export const LoginView = () => {
             <p className="lead">Track every pilot, grant and investment in one place.</p>
             <div className="sparkles" style={{ color: "#ffc107" }}>✦ ✦</div>
 
-            {/* Try a demo account box */}
-            <div className="demo-accounts-box">
-              <h4>Try a demo account</h4>
-              <div className="demo-btn-grid">
-                <button
-                  type="button"
-                  className="demo-btn"
-                  onClick={() => handleDemoLogin("startup@demo.in", "startup")}
-                >
-                  Startup
-                  <br />
-                  <span style={{ fontSize: "10.5px", opacity: 0.85 }}>startup@demo.in</span>
-                </button>
-                <button
-                  type="button"
-                  className="demo-btn"
-                  onClick={() => handleDemoLogin("investor@demo.in", "investor")}
-                >
-                  Investor
-                  <br />
-                  <span style={{ fontSize: "10.5px", opacity: 0.85 }}>investor@demo.in</span>
-                </button>
-                <button
-                  type="button"
-                  className="demo-btn"
-                  onClick={() => handleDemoLogin("pilot@demo.in", "pilot")}
-                >
-                  Pilot
-                  <br />
-                  <span style={{ fontSize: "10.5px", opacity: 0.85 }}>pilot@demo.in</span>
-                </button>
-                <button
-                  type="button"
-                  className="demo-btn"
-                  onClick={() => handleDemoLogin("grant@demo.in", "grant")}
-                >
-                  Grant
-                  <br />
-                  <span style={{ fontSize: "10.5px", opacity: 0.85 }}>grant@demo.in</span>
-                </button>
-              </div>
-              <div className="demo-pass-hint">
-                Password: <strong>demo123</strong> (one-click pre-fills &amp; logs in)
-              </div>
-            </div>
+            {/* Thumbs-up illustration */}
+            <svg
+              width="150"
+              height="150"
+              viewBox="0 0 160 160"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ marginTop: "16px" }}
+            >
+              <rect x="25" y="85" width="28" height="55" rx="6" fill="#9ec5fe" />
+              <rect x="22" y="80" width="34" height="12" rx="4" fill="#6ea8fe" />
+              <path d="M53 92H115C124 92 131 99 130 108L126 138C125 145 119 150 112 150H53V92Z" fill="#cfe2ff" stroke="#9ec5fe" strokeWidth="2.5" />
+              <line x1="53" y1="106" x2="120" y2="106" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
+              <line x1="53" y1="120" x2="118" y2="120" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
+              <line x1="53" y1="134" x2="114" y2="134" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
+              <path d="M53 92L78 45C83 36 94 36 98 44C100 48 100 54 97 59L88 80H115" stroke="#9ec5fe" strokeWidth="2.5" fill="#cfe2ff" strokeLinejoin="round" />
+            </svg>
           </div>
         </div>
       </div>
@@ -266,7 +225,7 @@ const ForgotPasswordModal = ({ onDone }) => {
     } else {
       setResult({
         status: "error",
-        message: "No account found with this email. Demo password is demo123."
+        message: "No account found with this email."
       });
     }
   };

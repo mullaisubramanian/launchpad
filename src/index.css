@@ -685,52 +685,6 @@ footer {
   background: #dee2e6;
 }
 
-/* Demo Account Pill Box */
-.demo-accounts-box {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.25);
-  padding: 18px;
-  width: 100%;
-  margin-top: 18px;
-  text-align: left;
-}
-.demo-accounts-box h4 {
-  font-size: 13.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #ffffff;
-  margin-bottom: 10px;
-  text-align: center;
-}
-.demo-btn-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-.demo-btn {
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: #ffffff;
-  padding: 7px 8px;
-  font-size: 12.5px;
-  font-weight: 600;
-  border-radius: 6px;
-  cursor: pointer;
-  text-align: center;
-  transition: background 0.15s;
-}
-.demo-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-.demo-pass-hint {
-  font-size: 12px;
-  color: #ffffff;
-  text-align: center;
-}
 
 /* COUNT STAT CARDS */
 .stats-row {
