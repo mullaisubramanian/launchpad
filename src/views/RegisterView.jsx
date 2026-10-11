@@ -323,8 +323,9 @@ export const RegisterView = ({ initialRole = "startup" }) => {
                   value={formData.role}
                   onChange={handleChange}
                   required
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", fontWeight: 700 }}
                 >
+                  <option value="" disabled>Choose your Role</option>
                   <option value="startup">Startup</option>
                   <option value="pilot">Pilot</option>
                   <option value="grant">Grant</option>
@@ -332,21 +333,27 @@ export const RegisterView = ({ initialRole = "startup" }) => {
                 </select>
               </div>
 
-              <button type="submit" className="auth-reg-btn">
-                Register
-              </button>
+              <input
+                type="submit"
+                value="Register"
+                className="auth-reg-btn"
+              />
 
               <div
                 style={{
                   textAlign: "center",
-                  marginTop: "20px",
-                  fontSize: "14px",
-                  color: "#64748b"
+                  marginTop: "24px",
+                  fontSize: "14.5px",
+                  fontWeight: 700,
+                  color: "#212529"
                 }}
               >
-                Already have an account?{" "}
-                <a href="#/login" style={{ color: "var(--pri)", fontWeight: 700 }}>
-                  Login
+                Already have an account ?{" "}
+                <a
+                  href="#/login"
+                  style={{ color: "var(--pri)", fontWeight: 700, textDecoration: "none" }}
+                >
+                  Login !
                 </a>
               </div>
             </form>
@@ -358,30 +365,15 @@ export const RegisterView = ({ initialRole = "startup" }) => {
             <p className="lead">Believe you can, and you're halfway there.</p>
             <div className="sparkles" style={{ color: "#ffc107" }}>✦ ✦</div>
 
-            {/* Large light-blue thumbs-up SVG with #9ec5fe shading */}
-            <svg
-              width="150"
-              height="150"
-              viewBox="0 0 160 160"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ marginTop: "10px" }}
-            >
-              {/* Cuff/Sleeve */}
-              <rect x="25" y="85" width="28" height="55" rx="6" fill="#9ec5fe" />
-              <rect x="22" y="80" width="34" height="12" rx="4" fill="#6ea8fe" />
-              
-              {/* Hand Palm */}
-              <path d="M53 92H115C124 92 131 99 130 108L126 138C125 145 119 150 112 150H53V92Z" fill="#cfe2ff" stroke="#9ec5fe" strokeWidth="2.5" />
-              
-              {/* Fingers */}
-              <line x1="53" y1="106" x2="120" y2="106" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
-              <line x1="53" y1="120" x2="118" y2="120" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
-              <line x1="53" y1="134" x2="114" y2="134" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
-
-              {/* Upright Thumb */}
-              <path d="M53 92L68 50C72 38 85 30 96 36C104 40 106 50 102 58L92 82C90 86 93 92 98 92H110" fill="#cfe2ff" stroke="#9ec5fe" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            {/* Exact thumbs-up animation matching 1-stop.web.app */}
+            <div style={{ position: "relative", width: "100%", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "10px" }}>
+              <img
+                src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWQyMGY2MzA4YzAwODY3ZDgxNTg1OTM4NTFkYjc0MGMzMGRlZWMzZCZlcD12MV9pbnRlcm5hbF9naWZzX2dpZklkJmN0PXM/XDjM8Abu3eRQnCovWB/giphy.gif"
+                alt="Create an account illustration"
+                style={{ width: "100%", maxWidth: "340px", height: "auto", display: "block" }}
+                loading="eager"
+              />
+            </div>
           </div>
         </div>
       </div>
