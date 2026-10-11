@@ -471,8 +471,20 @@ section[id] {
 }
 .hero-illustration {
   width: 100%;
-  max-width: 480px;
+  max-width: 540px;
   height: auto;
+}
+.swinging-girl {
+  transform-origin: 700px 450px;
+  animation: swingGirl 3.5s ease-in-out infinite alternate;
+}
+@keyframes swingGirl {
+  0% {
+    transform: rotate(-6deg);
+  }
+  100% {
+    transform: rotate(6deg);
+  }
 }
 
 /* ABOUT SECTION */

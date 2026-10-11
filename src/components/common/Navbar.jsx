@@ -27,7 +27,6 @@ export const Navbar = () => {
     links = [
       { label: "Home", hash: "#/home", key: "home" },
       { label: "About", hash: "#/about", key: "about" },
-      { label: "Services", hash: "#/services", key: "services" },
       { label: "Register", hash: "#/register", key: "register" },
       { label: "Login", hash: "#/login", key: "login" }
     ];
