@@ -6,23 +6,29 @@ const router = Router();
 
 // POST /api/auth/login
 router.post("/login", async (req, res) => {
-  const { email, pass } = req.body;
+  const { email, pass, role } = req.body;
   if (!email || !pass) {
     return res.status(400).json({ success: false, message: "Email and password are required" });
   }
 
+  const trimmedEmail = email.toLowerCase().trim();
+  const trimmedPass = (pass || "").trim();
   const data = db.read();
-  let user = data.users.find(
-    (u) => u.email.toLowerCase() === email.toLowerCase().trim() && u.pass === pass
-  );
+
+  let user = data.users.find((u) => {
+    const matchEmail = (u.email || "").toLowerCase().trim() === trimmedEmail;
+    const matchPass = (u.pass || "").trim() === trimmedPass;
+    const matchRole = role ? (u.role || "").toLowerCase() === role.toLowerCase() : true;
+    return matchEmail && matchPass && matchRole;
+  });
 
   // If not found in local db, check Supabase
   if (!user) {
     const suUser = await findUserInSupabase(email, pass);
-    if (suUser) {
+    if (suUser && (!role || suUser.role?.toLowerCase() === role.toLowerCase())) {
       user = {
         id: suUser.id,
-        role: suUser.role,
+        role: suUser.role?.toLowerCase() || "startup",
         name: suUser.name,
         phone: suUser.phone,
         email: suUser.email,
@@ -39,7 +45,7 @@ router.post("/login", async (req, res) => {
   }
 
   if (!user) {
-    return res.status(401).json({ success: false, message: "Invalid email or password" });
+    return res.status(401).json({ success: false, message: "Invalid email, password, or role" });
   }
 
   // Sync to Supabase in background
@@ -58,13 +64,19 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ success: false, message: "All registration fields are required" });
   }
 
+  const normalizedRole = role.toLowerCase().trim();
+  const trimmedEmail = email.toLowerCase().trim();
+
   const data = db.read();
   const exists = data.users.find(
-    (u) => u.email.toLowerCase() === email.toLowerCase().trim()
+    (u) =>
+      (u.email || "").toLowerCase().trim() === trimmedEmail &&
+      (u.role || "").toLowerCase().trim() === normalizedRole
   );
 
   if (exists) {
-    return res.status(409).json({ success: false, message: "This email is already registered. Please login." });
+    const displayRole = normalizedRole.charAt(0).toUpperCase() + normalizedRole.slice(1);
+    return res.status(409).json({ success: false, message: `You already have a ${displayRole} account with this email. Please login.` });
   }
 
   const newUser = {

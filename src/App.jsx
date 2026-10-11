@@ -24,6 +24,26 @@ export const App = () => {
   const segments = cleanHash.split("/").filter(Boolean);
   const root = segments[0] || "home";
 
+  // Strict Route Guard: redirect if visiting an unauthorized route
+  React.useEffect(() => {
+    if (!currentUser) {
+      if (!["home", "about", "services", "login", "register"].includes(root)) {
+        navigate("#/login");
+      }
+    } else {
+      if (currentUser.role === "startup") {
+        if (["applicants", "add"].includes(root)) {
+          navigate("#/apply");
+        }
+      } else {
+        // Partner roles: investor, pilot, grant
+        if (["apply", "form", "status"].includes(root)) {
+          navigate("#/applicants");
+        }
+      }
+    }
+  }, [currentUser, root, navigate]);
+
   let content = null;
 
   if (root === "register") {

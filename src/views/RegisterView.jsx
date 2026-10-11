@@ -52,18 +52,22 @@ export const RegisterView = ({ initialRole = "startup" }) => {
       return;
     }
 
+    const normalizedRole = Store.normalizeRole(role);
     const currentStore = Store.get();
     const exists = currentStore.users.find(
-      (u) => u.email.toLowerCase() === trimmedEmail
+      (u) =>
+        (u.email || "").trim().toLowerCase() === trimmedEmail &&
+        Store.normalizeRole(u.role) === normalizedRole
     );
     if (exists) {
-      showToast("This email is already registered. Please login.", "bad");
+      const displayRole = normalizedRole.charAt(0).toUpperCase() + normalizedRole.slice(1);
+      showToast(`You already have a ${displayRole} account with this email. Please login.`, "bad");
       return;
     }
 
     const newUser = {
       id: generateId("u"),
-      role,
+      role: normalizedRole,
       name: trimmedName,
       phone: trimmedPhone,
       email: trimmedEmail,

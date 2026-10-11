@@ -104,50 +104,45 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   const handleLogin = useCallback(
-    async (email, pass) => {
-      // 1. Attempt backend API login first
+    async (email, pass, role) => {
+      // Clear previous session first
+      Store.setSessionUser(null);
+      setCurrentUser(null);
+
+      // Re-read latest users from localStorage before checking credentials
+      const local = Store.get();
+      setData(local);
+
+      // Perform login using Auth.login (email + pass + role)
+      const result = Auth.login(email, pass, role);
+      if (!result.success) {
+        return result;
+      }
+
+      const user = result.user;
+      setCurrentUser(user);
+
+      // Reset page states in sessionStorage if any
       try {
-        const res = await api.login(email, pass);
-        if (res && res.success && res.user) {
-          // Store user into local storage so local cache always has this user
-          const local = Store.get();
-          const userIdx = local.users.findIndex(
-            (u) => u.id === res.user.id || u.email.toLowerCase() === res.user.email.toLowerCase()
-          );
-          if (userIdx >= 0) {
-            local.users[userIdx] = { ...local.users[userIdx], ...res.user };
-          } else {
-            local.users.push(res.user);
-          }
-          Store.save(local);
-          Store.setSessionUser(res.user);
+        window.sessionStorage.removeItem("expanded_scheme_id");
+      } catch {}
 
-          setData(local);
-          setCurrentUser(res.user);
-          supabaseSyncProfile(res.user).catch(() => {});
-          return res.user;
-        }
-      } catch (e) {
-        console.warn("Server login fallback to local store:", e);
-      }
+      // Background sync
+      supabaseSyncProfile(user).catch(() => {});
+      api.login(email, pass, role).catch(() => {});
 
-      // 2. Fallback to local storage auth
-      const user = Auth.login(email, pass);
-      if (user) {
-        Store.setSessionUser(user);
-        setCurrentUser(user);
-        setData(Store.get());
-        supabaseSyncProfile(user).catch(() => {});
-        return user;
-      }
-      return null;
+      return { success: true, user };
     },
     []
   );
 
   const handleLogout = useCallback(() => {
+    // Full reset on logout: remove session, set currentUser = null, reset page state, navigate to #/home
     Auth.logout();
     setCurrentUser(null);
+    try {
+      window.sessionStorage.removeItem("expanded_scheme_id");
+    } catch {}
     showToast("Logged out successfully");
     navigate("#/home");
   }, [navigate, showToast]);

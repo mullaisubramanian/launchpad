@@ -102,6 +102,32 @@ export const Navbar = () => {
             </svg>
           </div>
           <span className="logo-text">{BRAND}</span>
+          {currentUser && (
+            <span
+              className="navbar-role-badge"
+              style={{
+                marginLeft: "8px",
+                fontSize: "12px",
+                fontWeight: 700,
+                textTransform: "capitalize",
+                background: "rgba(255, 255, 255, 0.2)",
+                color: "#ffffff",
+                padding: "3px 9px",
+                borderRadius: "12px",
+                border: "1px solid rgba(255, 255, 255, 0.4)",
+                letterSpacing: "0.3px",
+                lineHeight: 1
+              }}
+            >
+              {currentUser.role === "investor"
+                ? "Investor"
+                : currentUser.role === "pilot"
+                ? "Pilot"
+                : currentUser.role === "grant"
+                ? "Grant"
+                : "Startup"}
+            </span>
+          )}
         </div>
 
         {/* Desktop Links */}

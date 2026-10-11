@@ -6,6 +6,7 @@ export const LoginView = () => {
   const { login, showToast, navigate, openModal, closeModal } = useApp();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [role, setRole] = useState("startup");
   const [showPassword, setShowPassword] = useState(false);
 
   const redirectAfterLogin = (user) => {
@@ -24,22 +25,26 @@ export const LoginView = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = await login(email, pass);
-    if (!user) {
-      showToast("Invalid email or password", "bad");
+    const result = await login(email, pass, role);
+    if (!result.success) {
+      showToast(result.message, "bad");
       return;
     }
+    const user = result.user;
     showToast(`Welcome back, ${user.name}!`, "ok");
     redirectAfterLogin(user);
   };
 
-  const handleDemoLogin = async (demoEmail) => {
+  const handleDemoLogin = async (demoEmail, demoRole) => {
     setEmail(demoEmail);
     setPass("demo123");
-    const user = await login(demoEmail, "demo123");
-    if (user) {
-      showToast(`Logged in as ${user.name} (${user.role})`, "ok");
-      redirectAfterLogin(user);
+    setRole(demoRole);
+    const result = await login(demoEmail, "demo123", demoRole);
+    if (result.success) {
+      showToast(`Logged in as ${result.user.name} (${result.user.role})`, "ok");
+      redirectAfterLogin(result.user);
+    } else {
+      showToast(result.message, "bad");
     }
   };
 
@@ -125,6 +130,23 @@ export const LoginView = () => {
                 </span>
               </div>
 
+              {/* Role Select - Login as */}
+              <div className="auth-input-wrap">
+                <select
+                  className="auth-input"
+                  id="login-role"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  required
+                  style={{ cursor: "pointer" }}
+                >
+                  <option value="startup">Startup</option>
+                  <option value="pilot">Pilot</option>
+                  <option value="grant">Grant</option>
+                  <option value="investor">Investor</option>
+                </select>
+              </div>
+
               <button type="submit" className="auth-reg-btn">
                 Login
               </button>
@@ -179,7 +201,7 @@ export const LoginView = () => {
                 <button
                   type="button"
                   className="demo-btn"
-                  onClick={() => handleDemoLogin("startup@demo.in")}
+                  onClick={() => handleDemoLogin("startup@demo.in", "startup")}
                 >
                   Startup
                   <br />
@@ -188,7 +210,7 @@ export const LoginView = () => {
                 <button
                   type="button"
                   className="demo-btn"
-                  onClick={() => handleDemoLogin("investor@demo.in")}
+                  onClick={() => handleDemoLogin("investor@demo.in", "investor")}
                 >
                   Investor
                   <br />
@@ -197,7 +219,7 @@ export const LoginView = () => {
                 <button
                   type="button"
                   className="demo-btn"
-                  onClick={() => handleDemoLogin("pilot@demo.in")}
+                  onClick={() => handleDemoLogin("pilot@demo.in", "pilot")}
                 >
                   Pilot
                   <br />
@@ -206,7 +228,7 @@ export const LoginView = () => {
                 <button
                   type="button"
                   className="demo-btn"
-                  onClick={() => handleDemoLogin("grant@demo.in")}
+                  onClick={() => handleDemoLogin("grant@demo.in", "grant")}
                 >
                   Grant
                   <br />
