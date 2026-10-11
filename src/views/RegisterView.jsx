@@ -77,7 +77,7 @@ export const RegisterView = ({ initialRole = "startup" }) => {
     // Save to local store immediately
     currentStore.users.push(newUser);
     Store.save(currentStore);
-    Store.setSessionUserId(newUser.id);
+    Store.setSessionUser(newUser);
     setData({ ...currentStore });
     setCurrentUser(newUser);
 

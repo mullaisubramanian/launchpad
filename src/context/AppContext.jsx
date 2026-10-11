@@ -19,23 +19,45 @@ export const AppProvider = ({ children }) => {
       const res = await api.getAllData();
       if (res && res.success && res.data) {
         setServerOnline(true);
-        // Sync local store cache while preserving credentials
+        // Sync local store cache while preserving credentials and offline registered users
         const local = Store.get();
-        const mergedUsers = (res.data.users && res.data.users.length ? res.data.users : local.users).map((u) => {
-          const localUser = local.users.find((lu) => lu.id === u.id || lu.email.toLowerCase() === u.email.toLowerCase());
+        const serverUsers = res.data.users || [];
+
+        // Map server users and keep passwords from local users if known
+        const mergedUsers = serverUsers.map((u) => {
+          const localUser = local.users.find(
+            (lu) => lu.id === u.id || lu.email.toLowerCase() === u.email.toLowerCase()
+          );
           return {
             ...u,
             pass: localUser?.pass || u.pass || "demo123"
           };
         });
 
+        // Add any local users that aren't on the server yet so they aren't lost
+        local.users.forEach((lu) => {
+          if (
+            !mergedUsers.some(
+              (mu) => mu.id === lu.id || mu.email.toLowerCase() === lu.email.toLowerCase()
+            )
+          ) {
+            mergedUsers.push(lu);
+          }
+        });
+
         const merged = {
           users: mergedUsers,
-          schemes: res.data.schemes || local.schemes,
-          apps: res.data.apps || local.apps
+          schemes: res.data.schemes && res.data.schemes.length ? res.data.schemes : local.schemes,
+          apps: res.data.apps && res.data.apps.length ? res.data.apps : local.apps
         };
         Store.save(merged);
         setData(merged);
+
+        // Keep current session user synchronized
+        const active = Auth.getCurrentUser();
+        if (active) {
+          setCurrentUser(active);
+        }
       } else {
         setServerOnline(false);
       }
@@ -51,7 +73,10 @@ export const AppProvider = ({ children }) => {
   const refreshData = useCallback(() => {
     const updated = Store.get();
     setData(updated);
-    setCurrentUser(Auth.getCurrentUser());
+    const active = Auth.getCurrentUser();
+    if (active) {
+      setCurrentUser(active);
+    }
   }, []);
 
   const showToast = useCallback((message, type = "pri") => {
@@ -71,38 +96,50 @@ export const AppProvider = ({ children }) => {
   }, []);
 
   const navigate = useCallback((hash) => {
-    if (window.location.hash === hash) {
-      setCurrentRoute(hash);
-    } else {
+    setCurrentRoute(hash);
+    if (window.location.hash !== hash) {
       window.location.hash = hash;
     }
   }, []);
 
   const handleLogin = useCallback(
     async (email, pass) => {
-      // Attempt backend API login first
+      // 1. Attempt backend API login first
       try {
         const res = await api.login(email, pass);
         if (res && res.success && res.user) {
-          Store.setSessionUserId(res.user.id);
+          // Store user into local storage so local cache always has this user
+          const local = Store.get();
+          const userIdx = local.users.findIndex(
+            (u) => u.id === res.user.id || u.email.toLowerCase() === res.user.email.toLowerCase()
+          );
+          if (userIdx >= 0) {
+            local.users[userIdx] = { ...local.users[userIdx], ...res.user };
+          } else {
+            local.users.push(res.user);
+          }
+          Store.save(local);
+          Store.setSessionUser(res.user);
+
+          setData(local);
           setCurrentUser(res.user);
-          refreshData();
           return res.user;
         }
       } catch (e) {
         console.warn("Server login fallback to local store:", e);
       }
 
-      // Fallback to local storage auth
+      // 2. Fallback to local storage auth
       const user = Auth.login(email, pass);
       if (user) {
+        Store.setSessionUser(user);
         setCurrentUser(user);
-        refreshData();
+        setData(Store.get());
         return user;
       }
       return null;
     },
-    [refreshData]
+    []
   );
 
   const handleLogout = useCallback(() => {

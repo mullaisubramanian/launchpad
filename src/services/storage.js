@@ -61,6 +61,30 @@ export class Store {
       console.error("Failed to set session:", e);
     }
   }
+
+  static getSessionUser() {
+    try {
+      const raw = localStorage.getItem("launchbridge_platform_session_user");
+      if (raw) return JSON.parse(raw);
+    } catch (e) {
+      console.error("Failed to get session user:", e);
+    }
+    return null;
+  }
+
+  static setSessionUser(user) {
+    try {
+      if (user) {
+        localStorage.setItem("launchbridge_platform_session_user", JSON.stringify(user));
+        localStorage.setItem(SESSION_KEY, user.id);
+      } else {
+        localStorage.removeItem("launchbridge_platform_session_user");
+        localStorage.removeItem(SESSION_KEY);
+      }
+    } catch (e) {
+      console.error("Failed to set session user:", e);
+    }
+  }
 }
 
 // Ensure storage is initialized
