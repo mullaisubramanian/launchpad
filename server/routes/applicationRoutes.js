@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { db } from "../data/db.js";
+import { syncApplicationToSupabase, syncApplicationStatusToSupabase } from "../supabase.js";
 
 const router = Router();
 
@@ -58,6 +59,9 @@ router.post("/", (req, res) => {
   data.apps.unshift(newApp);
   db.write(data);
 
+  // Sync to Supabase
+  syncApplicationToSupabase(newApp).catch(() => {});
+
   return res.status(201).json({ success: true, application: newApp });
 });
 
@@ -78,6 +82,9 @@ router.patch("/:id/status", (req, res) => {
   app.status = status;
   app.updated = new Date().toISOString();
   db.write(data);
+
+  // Sync status to Supabase
+  syncApplicationStatusToSupabase(app.id, status).catch(() => {});
 
   return res.json({ success: true, application: app });
 });

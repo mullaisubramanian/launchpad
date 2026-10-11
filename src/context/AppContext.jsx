@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, useCallback } fr
 import { Store } from "../services/storage";
 import { Auth } from "../services/auth";
 import { api } from "../services/api";
+import { supabaseSyncProfile } from "../services/supabase";
 
 const AppContext = createContext(null);
 
@@ -123,6 +124,7 @@ export const AppProvider = ({ children }) => {
 
           setData(local);
           setCurrentUser(res.user);
+          supabaseSyncProfile(res.user).catch(() => {});
           return res.user;
         }
       } catch (e) {
@@ -135,6 +137,7 @@ export const AppProvider = ({ children }) => {
         Store.setSessionUser(user);
         setCurrentUser(user);
         setData(Store.get());
+        supabaseSyncProfile(user).catch(() => {});
         return user;
       }
       return null;

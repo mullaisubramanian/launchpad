@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useApp } from "../context/AppContext";
 import { Store } from "../services/storage";
 import { api } from "../services/api";
+import { supabaseSyncProfile } from "../services/supabase";
 import { generateId } from "../utils/formatters";
 
 export const RegisterView = ({ initialRole = "startup" }) => {
@@ -83,6 +84,9 @@ export const RegisterView = ({ initialRole = "startup" }) => {
 
     // Also register on backend if server is active
     api.register(newUser).catch((err) => console.warn("Backend register sync:", err));
+
+    // Direct Supabase sync
+    supabaseSyncProfile(newUser).catch((err) => console.warn("Supabase register sync:", err));
 
     showToast("Registration successful", "ok");
     if (newUser.role === "startup") {

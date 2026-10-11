@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { db } from "../data/db.js";
+import { syncSchemeToSupabase } from "../supabase.js";
 
 const router = Router();
 
@@ -57,6 +58,9 @@ router.post("/", (req, res) => {
 
   data.schemes.unshift(newScheme);
   db.write(data);
+
+  // Sync to Supabase
+  syncSchemeToSupabase(newScheme).catch(() => {});
 
   return res.status(201).json({ success: true, scheme: newScheme });
 });

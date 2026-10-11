@@ -1,23 +1,49 @@
 import { Router } from "express";
 import { db } from "../data/db.js";
+import { syncUserToSupabase, findUserInSupabase } from "../supabase.js";
 
 const router = Router();
 
 // POST /api/auth/login
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   const { email, pass } = req.body;
   if (!email || !pass) {
     return res.status(400).json({ success: false, message: "Email and password are required" });
   }
 
   const data = db.read();
-  const user = data.users.find(
+  let user = data.users.find(
     (u) => u.email.toLowerCase() === email.toLowerCase().trim() && u.pass === pass
   );
+
+  // If not found in local db, check Supabase
+  if (!user) {
+    const suUser = await findUserInSupabase(email, pass);
+    if (suUser) {
+      user = {
+        id: suUser.id,
+        role: suUser.role,
+        name: suUser.name,
+        phone: suUser.phone,
+        email: suUser.email,
+        pass: suUser.pass,
+        city: suUser.city,
+        state: suUser.state,
+        pincode: suUser.pincode,
+        org: suUser.org,
+        created: suUser.created_at
+      };
+      data.users.push(user);
+      db.write(data);
+    }
+  }
 
   if (!user) {
     return res.status(401).json({ success: false, message: "Invalid email or password" });
   }
+
+  // Sync to Supabase in background
+  syncUserToSupabase(user).catch(() => {});
 
   // Omit password from response
   const { pass: _, ...safeUser } = user;
@@ -25,7 +51,7 @@ router.post("/login", (req, res) => {
 });
 
 // POST /api/auth/register
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, phone, email, pass, city, state, pincode, role } = req.body;
 
   if (!name || !email || !pass || !phone || !city || !state || !pincode || !role) {
@@ -57,6 +83,9 @@ router.post("/register", (req, res) => {
 
   data.users.push(newUser);
   db.write(data);
+
+  // Sync newly registered user to Supabase
+  await syncUserToSupabase(newUser);
 
   const { pass: _, ...safeUser } = newUser;
   return res.status(201).json({ success: true, user: safeUser });
