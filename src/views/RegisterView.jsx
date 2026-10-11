@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useApp } from "../context/AppContext";
 import { Store } from "../services/storage";
+import { api } from "../services/api";
 import { generateId } from "../utils/formatters";
 
 export const RegisterView = ({ initialRole = "startup" }) => {
@@ -73,11 +74,15 @@ export const RegisterView = ({ initialRole = "startup" }) => {
       created: new Date().toISOString()
     };
 
+    // Save to local store immediately
     currentStore.users.push(newUser);
     Store.save(currentStore);
     Store.setSessionUserId(newUser.id);
-    setData(currentStore);
+    setData({ ...currentStore });
     setCurrentUser(newUser);
+
+    // Also register on backend if server is active
+    api.register(newUser).catch((err) => console.warn("Backend register sync:", err));
 
     showToast("Registration successful", "ok");
     if (newUser.role === "startup") {

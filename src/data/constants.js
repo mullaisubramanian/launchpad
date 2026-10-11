@@ -14,5 +14,6 @@ export const DEPARTMENTS = [
   "Clean Energy",
   "Food & Beverage",
   "Textiles",
-  "Tourism"
+  "Tourism",
+  "Others"
 ];

@@ -19,10 +19,18 @@ export const AppProvider = ({ children }) => {
       const res = await api.getAllData();
       if (res && res.success && res.data) {
         setServerOnline(true);
-        // Sync local store cache
+        // Sync local store cache while preserving credentials
         const local = Store.get();
+        const mergedUsers = (res.data.users && res.data.users.length ? res.data.users : local.users).map((u) => {
+          const localUser = local.users.find((lu) => lu.id === u.id || lu.email.toLowerCase() === u.email.toLowerCase());
+          return {
+            ...u,
+            pass: localUser?.pass || u.pass || "demo123"
+          };
+        });
+
         const merged = {
-          users: res.data.users && res.data.users.length ? res.data.users : local.users,
+          users: mergedUsers,
           schemes: res.data.schemes || local.schemes,
           apps: res.data.apps || local.apps
         };
@@ -44,8 +52,7 @@ export const AppProvider = ({ children }) => {
     const updated = Store.get();
     setData(updated);
     setCurrentUser(Auth.getCurrentUser());
-    syncFromServer();
-  }, [syncFromServer]);
+  }, []);
 
   const showToast = useCallback((message, type = "pri") => {
     const id = Date.now() + Math.random();

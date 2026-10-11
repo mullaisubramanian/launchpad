@@ -22,9 +22,9 @@ export const LoginView = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = login(email, pass);
+    const user = await login(email, pass);
     if (!user) {
       showToast("Invalid email or password", "bad");
       return;
@@ -33,10 +33,10 @@ export const LoginView = () => {
     redirectAfterLogin(user);
   };
 
-  const handleDemoLogin = (demoEmail) => {
+  const handleDemoLogin = async (demoEmail) => {
     setEmail(demoEmail);
     setPass("demo123");
-    const user = login(demoEmail, "demo123");
+    const user = await login(demoEmail, "demo123");
     if (user) {
       showToast(`Logged in as ${user.name} (${user.role})`, "ok");
       redirectAfterLogin(user);
