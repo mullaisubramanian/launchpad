@@ -1,0 +1,3736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LaunchBridge - Connecting Startups with Investors, Pilots & Grants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --nav1: #0f766e;
+      --nav2: #134e4a;
+      --dark: #0c1a1d;
+      --dark2: #12252a;
+      --pri: #0d9488;
+      --pri-h: #0f766e;
+      --head: #2dd4bf;
+      --acc: #f59e0b;
+      --acc-h: #d97706;
+      --card: #ffffff;
+      --ink: #122126;
+      --muted: #5b6f75;
+      --line: #d6e4e6;
+      --soft: #ccfbf1;
+      --soft2: #f0fdfa;
+      --ok: #15803d;
+      --bad: #dc2626;
+      --warn: #b45309;
+      --font: 'Poppins', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: #ffffff;
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.55;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Common Components & Helpers */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .page-title {
+      text-align: center;
+      font-weight: 800;
+      color: var(--head);
+      font-size: clamp(32px, 5vw, 58px);
+      margin: 28px 0 24px;
+      line-height: 1.15;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      color: #cfe3e1;
+      max-width: 720px;
+      margin: -12px auto 28px;
+      font-size: 16px;
+    }
+
+    .white-panel {
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      margin-bottom: 40px;
+    }
+
+    .dark-card {
+      background: var(--dark2);
+      border: 1px solid #1f3a40;
+      border-radius: 14px;
+      padding: 24px;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--pri);
+      color: #ffffff;
+      font-weight: 600;
+      font-family: var(--font);
+      font-size: 15px;
+      border-radius: 8px;
+      padding: 9px 20px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+      text-align: center;
+      gap: 8px;
+      line-height: 1.4;
+    }
+    .btn:hover:not(:disabled) {
+      background: var(--pri-h);
+    }
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-acc {
+      background: var(--acc);
+      color: #1d1300;
+    }
+    .btn-acc:hover:not(:disabled) {
+      background: var(--acc-h);
+    }
+    .btn-ok {
+      background: var(--ok);
+      color: #ffffff;
+    }
+    .btn-ok:hover:not(:disabled) {
+      background: #166534;
+    }
+    .btn-bad {
+      background: var(--bad);
+      color: #ffffff;
+    }
+    .btn-bad:hover:not(:disabled) {
+      background: #b91c1c;
+    }
+    .btn-ghost {
+      background: transparent;
+      border: 1.5px solid var(--line);
+      color: var(--ink);
+    }
+    .btn-ghost:hover:not(:disabled) {
+      background: #f1f5f9;
+    }
+    .btn-sm {
+      padding: 6px 13px;
+      font-size: 13px;
+      border-radius: 6px;
+    }
+    .btn-lg {
+      padding: 13px 28px;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    /* Form Inputs */
+    .form-group {
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-group.center-label > label {
+      text-align: center;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+    .form-group > label {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      background: #ffffff;
+      border: 1.5px solid #9fd6cf;
+      border-radius: 7px;
+      padding: 10px 14px;
+      font-family: var(--font);
+      font-size: 14.5px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--pri);
+      box-shadow: 0 0 0 3.5px rgba(13, 148, 136, 0.22);
+    }
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    input:disabled,
+    select:disabled {
+      background: #f1f5f9;
+      color: #64748b;
+      cursor: not-allowed;
+      border-color: #cbd5e1;
+    }
+
+    /* Underline style input (Auth pages) */
+    .auth-input-wrap {
+      position: relative;
+      margin-bottom: 22px;
+    }
+    .auth-input {
+      width: 100%;
+      border: none !important;
+      border-bottom: 2px solid var(--pri) !important;
+      border-radius: 0 !important;
+      padding: 10px 36px 10px 4px !important;
+      background: transparent !important;
+      font-family: var(--font);
+      font-size: 14.5px;
+      color: var(--ink);
+      outline: none;
+      box-shadow: none !important;
+    }
+    .auth-input:focus {
+      border-bottom-color: var(--acc) !important;
+      box-shadow: none !important;
+    }
+    .auth-input-icon {
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #334155;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Status Badges */
+    .badge {
+      display: inline-block;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 12.5px;
+      border-radius: 6px;
+      padding: 4px 10px;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+    .badge-registered {
+      background: #fef3c7;
+      color: #b45309;
+    }
+    .badge-accepted {
+      background: #dcfce7;
+      color: #15803d;
+    }
+    .badge-rejected {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    /* Tag pills */
+    .pill {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+    .pill-teal {
+      background: var(--soft);
+      color: #0f766e;
+    }
+    .pill-amber {
+      background: #fef3c7;
+      color: #b45309;
+    }
+    .pill-green {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    /* Top Navbar */
+    #navbar {
+      height: 72px;
+      background: linear-gradient(90deg, var(--nav1), var(--nav2));
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      border: 2px solid #ffffff;
+      background: rgba(255, 255, 255, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .logo-text {
+      font-weight: 800;
+      font-size: 22px;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+    .nav-link {
+      font-weight: 600;
+      font-size: 15px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      color: #ffffff;
+      transition: background 0.2s ease;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .nav-link.active {
+      background: rgba(255, 255, 255, 0.18);
+    }
+    .hamburger-btn {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .mobile-dropdown {
+      display: none;
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      background: #0f4e4a;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      padding: 12px 24px;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mobile-dropdown.open {
+      display: flex;
+    }
+    .mobile-dropdown .nav-link {
+      width: 100%;
+      padding: 10px 14px;
+    }
+
+    /* Main view container */
+    #main-content {
+      flex: 1;
+      width: 100%;
+    }
+
+    /* Section scroll margin */
+    section[id] {
+      scroll-margin-top: 72px;
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+      position: relative;
+      min-height: calc(100vh - 72px);
+      display: flex;
+      align-items: center;
+      padding: 60px 0;
+      background: radial-gradient(circle at 75% 30%, #153a42 0%, var(--dark) 70%);
+      overflow: hidden;
+    }
+    .stars-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 2.5px;
+      height: 2.5px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 0.85; transform: scale(1.3); }
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-left {
+      text-align: left;
+    }
+    .hero-tag {
+      color: var(--head);
+      font-size: clamp(18px, 2.2vw, 24px);
+      font-weight: 500;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .hero-headline {
+      font-weight: 800;
+      font-size: clamp(38px, 5.6vw, 64px);
+      color: #ffffff;
+      line-height: 1.12;
+      margin-bottom: 30px;
+    }
+    .hero-headline .amber-text {
+      color: var(--acc);
+    }
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-illustration {
+      width: 100%;
+      max-width: 480px;
+      height: auto;
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+    }
+    @keyframes rocketFlame {
+      0%, 100% { transform: scale(1) translateY(0); opacity: 0.9; }
+      50% { transform: scale(1.25) translateY(2px); opacity: 1; fill: #fbbf24; }
+    }
+    .flame-anim {
+      animation: rocketFlame 0.4s infinite alternate ease-in-out;
+      transform-origin: 290px 185px;
+    }
+
+    /* ABOUT SECTION */
+    .about-section {
+      padding: 90px 0 70px;
+      background: var(--dark);
+      text-align: center;
+    }
+    .about-p {
+      color: #cfe3e1;
+      max-width: 860px;
+      margin: 0 auto 20px;
+      font-size: 16.5px;
+      line-height: 1.7;
+    }
+
+    /* SERVICES SECTION */
+    .services-section {
+      padding: 80px 0;
+      background: var(--dark);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+    }
+    .service-card {
+      background: var(--dark2);
+      border: 1px solid #1f3a40;
+      border-radius: 14px;
+      padding: 28px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--pri);
+      box-shadow: 0 12px 28px rgba(13, 148, 136, 0.15);
+    }
+    .service-icon-tile {
+      width: 62px;
+      height: 62px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+    .service-card p {
+      color: #94a3b8;
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 22px;
+      flex: 1;
+    }
+
+    /* HOW IT WORKS SECTION */
+    .how-section {
+      padding: 80px 0 100px;
+      background: var(--dark);
+      text-align: center;
+    }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 40px;
+      text-align: left;
+    }
+    .how-card {
+      background: var(--dark2);
+      border: 1px solid #1f3a40;
+      border-radius: 14px;
+      padding: 26px;
+      position: relative;
+    }
+    .step-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--acc);
+      color: #1d1300;
+      font-weight: 800;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .how-card h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .how-card p {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.55;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #081214;
+      border-top: 1px solid #172a2e;
+      padding: 24px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13.5px;
+      margin-top: auto;
+    }
+
+    /* AUTH PAGES (Register & Login) */
+    .auth-page {
+      padding: 60px 0;
+      min-height: calc(100vh - 72px - 65px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 900px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+      background: #ffffff;
+    }
+    .auth-card-left {
+      background: #f7faf9;
+      color: var(--ink);
+      padding: 40px;
+    }
+    .auth-card-left h2 {
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .auth-card-right {
+      background: linear-gradient(160deg, #0d9488 0%, #134e4a 100%);
+      color: #ffffff;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    .auth-card-right h3 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .auth-card-right p.lead {
+      font-size: 15px;
+      font-weight: 600;
+      color: #ccfbf1;
+      margin-bottom: 24px;
+      line-height: 1.45;
+    }
+    .sparkles {
+      color: var(--acc);
+      font-size: 18px;
+      letter-spacing: 6px;
+      margin-bottom: 20px;
+    }
+    .auth-reg-btn {
+      background: #e2e8f0;
+      color: var(--ink);
+      border-bottom: 3px solid var(--pri);
+      font-weight: 700;
+      padding: 10px 36px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto 0;
+      font-size: 15px;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      transition: background 0.2s;
+    }
+    .auth-reg-btn:hover {
+      background: #cbd5e1;
+    }
+
+    /* Demo Account Pill Box */
+    .demo-accounts-box {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 18px;
+      width: 100%;
+      margin-top: 18px;
+      text-align: left;
+    }
+    .demo-accounts-box h4 {
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--head);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .demo-btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .demo-btn {
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      padding: 7px 8px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.15s;
+    }
+    .demo-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .demo-pass-hint {
+      font-size: 12px;
+      color: #ccfbf1;
+      text-align: center;
+    }
+
+    /* COUNT STAT CARDS */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--dark2);
+      border: 1px solid #1f3a40;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--head);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 13.5px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    /* APPLICANTS LIST (Partner View) */
+    .toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .scheme-block {
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      background: #ffffff;
+    }
+    .scheme-header {
+      background: var(--soft2);
+      padding: 16px 20px;
+      border-bottom: 1.5px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .scheme-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .scheme-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .scheme-title-row h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .scheme-meta-info {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .scheme-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .scheme-body {
+      padding: 20px;
+    }
+    .scheme-kv-row {
+      font-size: 13.5px;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+    .scheme-kv-row strong {
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* Applicant Item inside Scheme */
+    .applicants-container {
+      margin-top: 18px;
+      border-top: 1.5px dashed var(--line);
+      padding-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .applicant-box {
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 16px 18px;
+      background: #f8fafc;
+    }
+    .applicant-box-header {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--pri);
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .applicant-row {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #334155;
+      margin-bottom: 5px;
+    }
+    .applicant-row strong {
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .applicant-actions-bar {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* SEARCH SCHEMES (Fund Application Page) */
+    .search-panel {
+      max-width: 800px;
+      margin: 0 auto 36px;
+      text-align: center;
+    }
+    .search-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 16px;
+      align-items: flex-end;
+      margin-top: 20px;
+      text-align: left;
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .scheme-search-card {
+      background: #ffffff;
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      border-top: 5px solid var(--pri);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .scheme-search-card.border-investor { border-top-color: var(--pri); }
+    .scheme-search-card.border-pilot { border-top-color: var(--acc); }
+    .scheme-search-card.border-grant { border-top-color: #22c55e; }
+    
+    .scheme-search-card h3 {
+      font-size: 19px;
+      font-weight: 700;
+      margin: 10px 0 4px;
+      color: var(--ink);
+    }
+    .scheme-company-name {
+      font-size: 13.5px;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    .scheme-amount-highlight {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f766e;
+      margin-bottom: 12px;
+      background: var(--soft2);
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .scheme-search-card p {
+      font-size: 13.5px;
+      color: #475569;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .scheme-card-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* APPLICATION FORM PAGE */
+    .scheme-summary-box {
+      background: var(--dark2);
+      border: 1px solid #1f3a40;
+      border-radius: 10px;
+      padding: 20px;
+      color: #ffffff;
+      margin-bottom: 28px;
+    }
+    .scheme-summary-box h3 {
+      font-size: 20px;
+      color: var(--head);
+      margin-bottom: 6px;
+    }
+
+    /* STATUS PAGE */
+    .status-section {
+      margin-bottom: 40px;
+    }
+    .status-section h2 {
+      color: var(--head);
+      font-weight: 800;
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .status-table-wrap {
+      background: var(--soft);
+      border-radius: 12px;
+      overflow-x: auto;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .status-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 650px;
+      text-align: left;
+    }
+    .status-table th {
+      background: #0f766e;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 18px;
+      letter-spacing: 0.3px;
+    }
+    .status-table td {
+      padding: 14px 18px;
+      font-size: 14px;
+      color: var(--ink);
+      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      background: rgba(255, 255, 255, 0.65);
+    }
+    .status-table tr:last-child td {
+      border-bottom: none;
+    }
+    .status-table tr:hover td {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    /* PROFILE PAGE */
+    .profile-header-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1.5px solid var(--line);
+    }
+    .profile-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pri), var(--acc));
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+    .profile-info h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+    .profile-role-date {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: capitalize;
+    }
+    .profile-stats-pill {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--pri-h);
+      background: var(--soft2);
+      border: 1px solid var(--soft);
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    .profile-grid-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px 24px;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(12, 26, 29, 0.78);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-box {
+      background: #ffffff;
+      color: var(--ink);
+      border-radius: 14px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .modal-close-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    /* TOAST */
+    #toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+    .toast {
+      background: #ffffff;
+      color: var(--ink);
+      border-left: 5px solid var(--pri);
+      padding: 12px 22px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14.5px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      pointer-events: auto;
+      animation: toastIn 0.25s ease-out;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 280px;
+      max-width: 90vw;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* EMPTY STATE BOX */
+    .empty-state {
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      padding: 40px 24px;
+      text-align: center;
+      color: #64748b;
+      font-size: 15px;
+      font-weight: 500;
+      margin: 20px 0;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-left {
+        text-align: center;
+      }
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .how-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .auth-card {
+        grid-template-columns: 1fr;
+      }
+      .auth-card-right {
+        order: -1;
+        padding: 28px;
+      }
+      .profile-grid-form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+      }
+      .hamburger-btn {
+        display: flex;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .how-grid {
+        grid-template-columns: 1fr;
+      }
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+      .search-controls {
+        grid-template-columns: 1fr;
+      }
+      .white-panel {
+        padding: 20px;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      .profile-header-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .grid-2col {
+        grid-template-columns: 1fr !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <header id="navbar">
+    <div class="container nav-inner">
+      <div class="nav-logo" id="logo-btn" title="LaunchBridge Home">
+        <div class="logo-mark">
+          <!-- 38px rounded-square SVG with white rising zig-zag and amber arrow -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M4 17L9 12L13 15L19 7" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 7H19V12" stroke="#f59e0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">LaunchBridge</span>
+      </div>
+
+      <ul class="nav-links" id="nav-links-desktop">
+        <!-- Rendered dynamically -->
+      </ul>
+
+      <button class="hamburger-btn" id="hamburger-toggle" aria-label="Toggle Navigation">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown -->
+    <div class="mobile-dropdown" id="mobile-dropdown-menu">
+      <!-- Rendered dynamically -->
+    </div>
+  </header>
+
+  <!-- MAIN VIEW -->
+  <main id="main-content">
+    <!-- View rendered via hash routing -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p id="footer-text">© 2026 LaunchBridge. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL ROOT -->
+  <div class="modal-overlay" id="app-modal-overlay">
+    <div class="modal-box" id="app-modal-content">
+      <!-- Dynamic modal content -->
+    </div>
+  </div>
+
+  <!-- TOAST ROOT -->
+  <div id="toast-container"></div>
+
+  <!-- APPLICATION LOGIC -->
+  <script>
+    /* =========================================================================
+       1. CONSTANTS, DEPARTMENTS & SEED DATA
+       ========================================================================= */
+    const BRAND = "LaunchBridge";
+    const STORAGE_KEY = "launchbridge_platform_v2";
+    const SESSION_KEY = "launchbridge_platform_session";
+
+    const DEPARTMENTS = [
+      "Ecommerce", "Logistics", "Agriculture", "Healthcare", "Education",
+      "Fintech", "Manufacturing", "IT & Software", "Clean Energy",
+      "Food & Beverage", "Textiles", "Tourism"
+    ];
+
+    const SEED_USERS = [
+      {
+        id: "u_startup1",
+        role: "startup",
+        name: "Arjun Kumar",
+        phone: "9876543210",
+        email: "startup@demo.in",
+        pass: "demo123",
+        city: "Coimbatore",
+        state: "Tamil Nadu",
+        pincode: "641001",
+        org: "New Creative",
+        created: "2026-01-10T10:00:00Z"
+      },
+      {
+        id: "u_investor1",
+        role: "investor",
+        name: "Ravi Shankar",
+        phone: "9845123456",
+        email: "investor@demo.in",
+        pass: "demo123",
+        city: "Chennai",
+        state: "Tamil Nadu",
+        pincode: "600001",
+        org: "Simple Invest",
+        created: "2026-01-05T09:00:00Z"
+      },
+      {
+        id: "u_pilot1",
+        role: "pilot",
+        name: "Meena Lakshmi",
+        phone: "9789012345",
+        email: "pilot@demo.in",
+        pass: "demo123",
+        city: "Tiruppur",
+        state: "Tamil Nadu",
+        pincode: "641601",
+        org: "XYZ Logistics",
+        created: "2026-01-08T11:30:00Z"
+      },
+      {
+        id: "u_grant1",
+        role: "grant",
+        name: "Dr. Vijay Kumar",
+        phone: "9123456780",
+        email: "grant@demo.in",
+        pass: "demo123",
+        city: "New Delhi",
+        state: "Delhi",
+        pincode: "110001",
+        org: "Central Government",
+        created: "2026-01-02T14:15:00Z"
+      },
+      {
+        id: "u_startup2",
+        role: "startup",
+        name: "Suresh Prabhu",
+        phone: "9940123456",
+        email: "abcdd@gmail.com",
+        pass: "demo123",
+        city: "Madurai",
+        state: "Tamil Nadu",
+        pincode: "625001",
+        org: "Migrate Bee",
+        created: "2026-02-12T08:00:00Z"
+      }
+    ];
+
+    const SEED_SCHEMES = [
+      {
+        id: "s_inv_1",
+        type: "investor",
+        ownerId: "u_investor1",
+        company: "Simple Invest",
+        name: "Innovation Power",
+        amount: "2000000",
+        dept: "Ecommerce",
+        desc: "Early stage capital for next-gen direct-to-consumer and retail supply chain platforms.",
+        eligibility: "No age limit",
+        created: "2026-02-01T10:00:00Z"
+      },
+      {
+        id: "s_inv_2",
+        type: "investor",
+        ownerId: "u_investor1",
+        company: "Simple Invest",
+        name: "AgriTech Seed Circle",
+        amount: "500000-2500000",
+        dept: "Agriculture",
+        desc: "Funding technology-driven post-harvest and precision farming startups across India.",
+        eligibility: "Working prototype or farm pilots completed.",
+        created: "2026-02-10T12:00:00Z"
+      },
+      {
+        id: "s_plt_1",
+        type: "pilot",
+        ownerId: "u_pilot1",
+        company: "XYZ Logistics",
+        name: "Innovative Ignite Fund",
+        amount: "500000-1000000",
+        dept: "Logistics",
+        desc: "Paid corporate pilot with our regional fulfillment hubs and fleet network across South India.",
+        eligibility: "No age limit to apply",
+        created: "2026-02-05T14:00:00Z"
+      },
+      {
+        id: "s_grt_1",
+        type: "grant",
+        ownerId: "u_grant1",
+        company: "Central Government",
+        name: "Agri Help Grant",
+        amount: "100000",
+        dept: "Agriculture",
+        grantKind: "Grant",
+        desc: "Non-dilutive grant support for registered small agricultural innovators and organic processors.",
+        eligibility: "Registered entity with DPIIT recognition.",
+        created: "2026-01-20T11:00:00Z"
+      },
+      {
+        id: "s_grt_2",
+        type: "grant",
+        ownerId: "u_grant1",
+        company: "Central Government",
+        name: "Initiatives for Development and Innovation Scheme",
+        amount: "1000000",
+        dept: "IT & Software",
+        grantKind: "Scheme",
+        desc: "Scheme for open-source AI, sovereign cloud technologies and digital infrastructure.",
+        eligibility: "Indian owned and controlled startup with demonstrable tech stack.",
+        created: "2026-01-25T15:30:00Z"
+      }
+    ];
+
+    const SEED_APPS = [
+      {
+        id: "app_1",
+        schemeId: "s_inv_1",
+        userId: "u_startup2",
+        startupName: "New Creative",
+        desc: "Building a headless omni-channel distribution engine for homegrown fashion brands.",
+        fileName: "NewCreative_PitchDeck.pdf",
+        fileData: "data:application/pdf;base64,JVBERi0xLjQKJcTl8uXprKW1",
+        status: "Registered",
+        created: "2026-02-15T10:30:00Z",
+        updated: "2026-02-15T10:30:00Z"
+      },
+      {
+        id: "app_2",
+        schemeId: "s_inv_1",
+        userId: "u_startup1",
+        startupName: "New Creative",
+        desc: "Scale-up expansion round targeting 10 tier-2 cities warehouse integrations.",
+        fileName: "PitchDeck_v3.pdf",
+        fileData: "data:application/pdf;base64,JVBERi0xLjQKJcTl8uXprKW1",
+        status: "Accepted",
+        created: "2026-02-16T11:00:00Z",
+        updated: "2026-02-18T16:20:00Z"
+      },
+      {
+        id: "app_3",
+        schemeId: "s_plt_1",
+        userId: "u_startup1",
+        startupName: "Migrate Bee",
+        desc: "Autonomous route optimization software reducing last-mile carbon footprint by 22%.",
+        fileName: "Pilot_Proposal_XYZ.docx",
+        fileData: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,UEsDBBQAAAAIA",
+        status: "Registered",
+        created: "2026-02-17T09:15:00Z",
+        updated: "2026-02-17T09:15:00Z"
+      },
+      {
+        id: "app_4",
+        schemeId: "s_grt_2",
+        userId: "u_startup1",
+        startupName: "Buzz AI",
+        desc: "Multilingual low-resource speech intelligence model for public service delivery.",
+        fileName: "Grant_Proposal_BuzzAI.pdf",
+        fileData: "data:application/pdf;base64,JVBERi0xLjQKJcTl8uXprKW1",
+        status: "Registered",
+        created: "2026-02-18T14:40:00Z",
+        updated: "2026-02-18T14:40:00Z"
+      }
+    ];
+
+    /* =========================================================================
+       2. DATABASE & STORAGE LAYER
+       ========================================================================= */
+    class Store {
+      static init() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            Store.resetSeedData();
+          }
+        } catch (e) {
+          console.error("Storage initialization error:", e);
+        }
+      }
+
+      static resetSeedData() {
+        const initial = {
+          users: JSON.parse(JSON.stringify(SEED_USERS)),
+          schemes: JSON.parse(JSON.stringify(SEED_SCHEMES)),
+          apps: JSON.parse(JSON.stringify(SEED_APPS))
+        };
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(initial));
+        } catch (e) {
+          console.error("Failed to write seed data:", e);
+        }
+        return initial;
+      }
+
+      static get() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) {
+          console.error("Failed to read storage:", e);
+        }
+        return Store.resetSeedData();
+      }
+
+      static save(data) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        } catch (e) {
+          console.error("Failed to save storage:", e);
+          Toast.show("Storage limit exceeded or error saving data", "bad");
+        }
+      }
+
+      static getSessionUserId() {
+        try {
+          return localStorage.getItem(SESSION_KEY);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      static setSessionUserId(id) {
+        try {
+          if (id) localStorage.setItem(SESSION_KEY, id);
+          else localStorage.removeItem(SESSION_KEY);
+        } catch (e) {}
+      }
+    }
+
+    // Initialize Store immediately
+    Store.init();
+
+    /* =========================================================================
+       3. UTILITY FUNCTIONS
+       ========================================================================= */
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatIndianDate(isoString) {
+      if (!isoString) return "-";
+      try {
+        const d = new Date(isoString);
+        if (isNaN(d.getTime())) return isoString;
+        const day = d.getDate();
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const month = months[d.getMonth()];
+        const year = d.getFullYear();
+        return `${day} ${month} ${year}`;
+      } catch (e) {
+        return isoString;
+      }
+    }
+
+    function formatIndianCurrency(amountStr) {
+      if (!amountStr) return "";
+      const trimmed = String(amountStr).trim();
+      // If it's a range like "500000-2500000" or has letters
+      if (trimmed.includes("-")) {
+        const parts = trimmed.split("-").map(p => formatSingleRupee(p.trim()));
+        return `₹${parts.join(" - ₹")}`;
+      }
+      return `₹${formatSingleRupee(trimmed)}`;
+    }
+
+    function formatSingleRupee(val) {
+      const num = parseInt(val, 10);
+      if (isNaN(num)) return val;
+      // Indian numbering format (e.g., 20,00,000)
+      return num.toLocaleString('en-IN');
+    }
+
+    function generateId(prefix) {
+      return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`;
+    }
+
+    /* =========================================================================
+       4. TOAST NOTIFICATION SYSTEM
+       ========================================================================= */
+    const Toast = {
+      show(message, type = "pri") {
+        const container = document.getElementById("toast-container");
+        if (!container) return;
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        if (type === "bad") toast.style.borderLeftColor = "var(--bad)";
+        if (type === "ok") toast.style.borderLeftColor = "var(--ok)";
+        if (type === "warn") toast.style.borderLeftColor = "var(--acc)";
+
+        toast.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${type === 'bad' ? '#dc2626' : (type === 'ok' ? '#15803d' : '#0d9488')}" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>${escapeHtml(message)}</span>
+        `;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+          toast.style.opacity = "0";
+          toast.style.transform = "translateY(15px)";
+          setTimeout(() => toast.remove(), 300);
+        }, 2800);
+      }
+    };
+
+    /* =========================================================================
+       5. MODAL SYSTEM
+       ========================================================================= */
+    const Modal = {
+      open(htmlContent) {
+        const overlay = document.getElementById("app-modal-overlay");
+        const content = document.getElementById("app-modal-content");
+        content.innerHTML = `
+          <button class="modal-close-btn" onclick="Modal.close()" title="Close">&times;</button>
+          ${htmlContent}
+        `;
+        overlay.classList.add("open");
+      },
+      close() {
+        const overlay = document.getElementById("app-modal-overlay");
+        overlay.classList.remove("open");
+      }
+    };
+
+    document.getElementById("app-modal-overlay").addEventListener("click", (e) => {
+      if (e.target.id === "app-modal-overlay") {
+        Modal.close();
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        Modal.close();
+      }
+    });
+
+    /* =========================================================================
+       6. AUTH & USER STATE
+       ========================================================================= */
+    const Auth = {
+      getCurrentUser() {
+        const id = Store.getSessionUserId();
+        if (!id) return null;
+        const data = Store.get();
+        return data.users.find(u => u.id === id) || null;
+      },
+      login(email, pass) {
+        const data = Store.get();
+        const user = data.users.find(u => u.email.toLowerCase() === email.toLowerCase().trim() && u.pass === pass);
+        if (user) {
+          Store.setSessionUserId(user.id);
+          return user;
+        }
+        return null;
+      },
+      logout() {
+        Store.setSessionUserId(null);
+        Toast.show("Logged out successfully");
+        Router.navigate("#/home");
+      },
+      getDefaultRoute(role) {
+        if (role === "startup") return "#/apply";
+        return "#/applicants";
+      }
+    };
+
+    /* =========================================================================
+       7. ROUTER & NAVIGATION CONTROLLER
+       ========================================================================= */
+    const Router = {
+      currentHash: "",
+      
+      init() {
+        window.addEventListener("hashchange", () => Router.handleRoute());
+        
+        // Logo handler: goes home if logged out, or first dashboard page if logged in
+        document.getElementById("logo-btn").addEventListener("click", () => {
+          const user = Auth.getCurrentUser();
+          if (user) {
+            Router.navigate(Auth.getDefaultRoute(user.role));
+          } else {
+            Router.navigate("#/home");
+          }
+        });
+
+        // Hamburger mobile toggle
+        const hamburgerBtn = document.getElementById("hamburger-toggle");
+        const mobileDropdown = document.getElementById("mobile-dropdown-menu");
+        hamburgerBtn.addEventListener("click", () => {
+          mobileDropdown.classList.toggle("open");
+        });
+
+        // Initialize route
+        if (!window.location.hash) {
+          window.location.hash = "#/home";
+        } else {
+          Router.handleRoute();
+        }
+      },
+
+      navigate(hash) {
+        if (window.location.hash === hash) {
+          // Hash won't fire hashchange, re-render manually
+          Router.handleRoute();
+        } else {
+          window.location.hash = hash;
+        }
+      },
+
+      handleRoute() {
+        const rawHash = window.location.hash || "#/home";
+        Router.currentHash = rawHash;
+        
+        // Close mobile dropdown menu if open
+        const mobileDropdown = document.getElementById("mobile-dropdown-menu");
+        if (mobileDropdown) mobileDropdown.classList.remove("open");
+
+        // Parse path
+        const pathPart = rawHash.replace(/^#\/?/, "");
+        const segments = pathPart.split("/").map(s => s.trim());
+        const root = segments[0] || "home";
+
+        const user = Auth.getCurrentUser();
+
+        // 1. Check sections on home page (home, about, services, how)
+        if (["home", "about", "services", "how"].includes(root)) {
+          Router.renderNavbar(user, root);
+          Views.renderHome();
+          if (root !== "home") {
+            setTimeout(() => {
+              const el = document.getElementById(root);
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }, 60);
+          } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+          return;
+        }
+
+        // Always scroll to top for dedicated pages
+        window.scrollTo(0, 0);
+
+        // 2. Public vs Authenticated route validation
+        if (root === "register") {
+          if (user) {
+            Router.navigate(Auth.getDefaultRoute(user.role));
+            return;
+          }
+          Router.renderNavbar(user, "register");
+          Views.renderRegister(segments[1] || "");
+          return;
+        }
+
+        if (root === "login") {
+          if (user) {
+            Router.navigate(Auth.getDefaultRoute(user.role));
+            return;
+          }
+          Router.renderNavbar(user, "login");
+          Views.renderLogin();
+          return;
+        }
+
+        // App routes require login
+        const appRoutes = ["applicants", "add", "apply", "form", "status", "profile"];
+        if (appRoutes.includes(root)) {
+          if (!user) {
+            Toast.show("Please login to continue", "warn");
+            Router.navigate("#/login");
+            return;
+          }
+
+          // Role guard: startup vs partners
+          if (user.role === "startup") {
+            if (["applicants", "add"].includes(root)) {
+              Toast.show("Access restricted to partners", "bad");
+              Router.navigate("#/apply");
+              return;
+            }
+          } else {
+            // Partners: investor, pilot, grant
+            if (["apply", "form", "status"].includes(root)) {
+              Toast.show("Access restricted to startups", "bad");
+              Router.navigate("#/applicants");
+              return;
+            }
+          }
+
+          Router.renderNavbar(user, root);
+
+          // Render app views
+          if (root === "applicants") Views.renderApplicants(user);
+          else if (root === "add") Views.renderAddScheme(user);
+          else if (root === "apply") Views.renderFundApplication(user);
+          else if (root === "form") Views.renderApplicationForm(user, segments[1]);
+          else if (root === "status") Views.renderStatus(user);
+          else if (root === "profile") Views.renderProfile(user);
+          return;
+        }
+
+        // Unknown route -> fallback to Home
+        Router.navigate("#/home");
+      },
+
+      renderNavbar(user, activeKey) {
+        const desktopUl = document.getElementById("nav-links-desktop");
+        const mobileDiv = document.getElementById("mobile-dropdown-menu");
+        let links = [];
+
+        if (!user) {
+          links = [
+            { label: "Home", hash: "#/home", key: "home" },
+            { label: "About", hash: "#/about", key: "about" },
+            { label: "Services", hash: "#/services", key: "services" },
+            { label: "Register", hash: "#/register", key: "register" },
+            { label: "Login", hash: "#/login", key: "login" }
+          ];
+        } else if (user.role === "investor") {
+          links = [
+            { label: "Home", hash: "#/home", key: "home" },
+            { label: "Applicants List", hash: "#/applicants", key: "applicants" },
+            { label: "Add Investment", hash: "#/add", key: "add" },
+            { label: "Profile", hash: "#/profile", key: "profile" },
+            { label: "Logout", action: "Auth.logout()", key: "logout" }
+          ];
+        } else if (user.role === "pilot") {
+          links = [
+            { label: "Home", hash: "#/home", key: "home" },
+            { label: "Applicants List", hash: "#/applicants", key: "applicants" },
+            { label: "Add Pilots", hash: "#/add", key: "add" },
+            { label: "Profile", hash: "#/profile", key: "profile" },
+            { label: "Logout", action: "Auth.logout()", key: "logout" }
+          ];
+        } else if (user.role === "grant") {
+          links = [
+            { label: "Home", hash: "#/home", key: "home" },
+            { label: "Applicants List", hash: "#/applicants", key: "applicants" },
+            { label: "Add Grant", hash: "#/add", key: "add" },
+            { label: "Profile", hash: "#/profile", key: "profile" },
+            { label: "Logout", action: "Auth.logout()", key: "logout" }
+          ];
+        } else if (user.role === "startup") {
+          links = [
+            { label: "Home", hash: "#/home", key: "home" },
+            { label: "Status", hash: "#/status", key: "status" },
+            { label: "Fund Application", hash: "#/apply", key: "apply" },
+            { label: "Profile", hash: "#/profile", key: "profile" },
+            { label: "Logout", action: "Auth.logout()", key: "logout" }
+          ];
+        }
+
+        const buildLink = (item) => {
+          const isActive = activeKey === item.key;
+          const activeClass = isActive ? "active" : "";
+          if (item.action) {
+            return `<li class="nav-link ${activeClass}" onclick="${item.action}">${item.label}</li>`;
+          }
+          return `<li class="nav-link ${activeClass}" onclick="Router.navigate('${item.hash}')">${item.label}</li>`;
+        };
+
+        const html = links.map(buildLink).join("");
+        desktopUl.innerHTML = html;
+        mobileDiv.innerHTML = html;
+      }
+    };
+
+    /* =========================================================================
+       8. UI VIEWS IMPLEMENTATION
+       ========================================================================= */
+    const Views = {
+      main: document.getElementById("main-content"),
+
+      /* -----------------------------------------------------------------------
+         8a. HOME VIEW
+         ----------------------------------------------------------------------- */
+      renderHome() {
+        // Generate twinkling stars
+        let starsHtml = "";
+        for (let i = 0; i < 70; i++) {
+          const top = (Math.random() * 100).toFixed(1);
+          const left = (Math.random() * 100).toFixed(1);
+          const delay = (Math.random() * 4).toFixed(2);
+          const dur = (2.2 + Math.random() * 3).toFixed(2);
+          starsHtml += `<div class="star" style="top:${top}%; left:${left}%; animation-delay:${delay}s; animation-duration:${dur}s;"></div>`;
+        }
+
+        Views.main.innerHTML = `
+          <!-- HERO -->
+          <section class="hero-section" id="home">
+            <div class="stars-layer">${starsHtml}</div>
+            <div class="container hero-grid">
+              <div class="hero-left">
+                <div class="hero-tag">Choose your service and scheme</div>
+                <h1 class="hero-headline">
+                  Track your progress <span class="amber-text">every second</span>
+                </h1>
+                <button class="btn btn-acc btn-lg" onclick="Router.navigate('#/services')">
+                  Discover more
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+              <div class="hero-right">
+                <!-- SVG Illustration -->
+                <svg class="hero-illustration" viewBox="0 0 440 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Ground line -->
+                  <line x1="20" y1="330" x2="420" y2="330" stroke="#1f3a40" stroke-width="3" stroke-linecap="round"/>
+                  
+                  <!-- 4 Teal Bar Columns (rising left to right) -->
+                  <!-- Col 1 -->
+                  <rect x="50" y="240" width="46" height="90" rx="6" fill="#134e4a"/>
+                  <!-- Col 2 -->
+                  <rect x="115" y="195" width="46" height="135" rx="6" fill="#115e59"/>
+                  <!-- Col 3 -->
+                  <rect x="180" y="145" width="46" height="185" rx="6" fill="#0f766e"/>
+                  <!-- Col 4 -->
+                  <rect x="245" y="90" width="46" height="240" rx="6" fill="#0d9488"/>
+
+                  <!-- Sprout in amber pot on the ground line -->
+                  <!-- Pot -->
+                  <path d="M60 330L63 312H83L86 330H60Z" fill="#f59e0b"/>
+                  <!-- Sprout stem & leaves -->
+                  <path d="M73 312V296" stroke="#2dd4bf" stroke-width="2.8" stroke-linecap="round"/>
+                  <path d="M73 302C66 300 62 292 64 286C72 288 73 298 73 302Z" fill="#2dd4bf"/>
+                  <path d="M73 298C80 295 85 287 83 281C75 282 73 294 73 298Z" fill="#2dd4bf"/>
+
+                  <!-- Amber Zig-Zag Growth Line with arrowhead -->
+                  <path d="M68 220L138 175L203 130L268 70" stroke="#f59e0b" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Arrowhead at top right -->
+                  <polygon points="268,60 278,74 260,78" fill="#f59e0b"/>
+
+                  <!-- Rocket Group -->
+                  <g transform="translate(20, -10)">
+                    <!-- Animated flame -->
+                    <path class="flame-anim" d="M284 172C281 184 290 196 290 196C290 196 299 184 296 172Z" fill="#f97316"/>
+                    <!-- Rocket Body -->
+                    <path d="M290 112C282 126 278 148 278 168H302C302 148 298 126 290 112Z" fill="#ffffff"/>
+                    <!-- Teal Rocket Window -->
+                    <circle cx="290" cy="144" r="5" fill="#0d9488" stroke="#ffffff" stroke-width="1.8"/>
+                    <!-- Amber Left Fin -->
+                    <path d="M278 152L266 168H278V152Z" fill="#f59e0b"/>
+                    <!-- Amber Right Fin -->
+                    <path d="M302 152L314 168H302V152Z" fill="#f59e0b"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </section>
+
+          <!-- ABOUT SECTION -->
+          <section class="about-section" id="about">
+            <div class="container">
+              <h2 class="page-title">About ${BRAND}</h2>
+              <p class="about-p">
+                ${BRAND} brings ambitious startups, forward-thinking investors, corporate pilot partners, and national government bodies together onto one seamless, transparent platform. We eliminate fragmented outreach and opaque pipelines by establishing direct, verified channels for capital, pilots, and grants.
+              </p>
+              <p class="about-p">
+                Startups can discover curated investors, sovereign grants, and industry-defining commercial pilots with zero gatekeeping. Partners effortlessly publish eligibility guidelines, review verified proposals with attached dossiers, and make definitive accept or reject decisions with complete operational velocity.
+              </p>
+            </div>
+          </section>
+
+          <!-- OUR SERVICES SECTION -->
+          <section class="services-section" id="services">
+            <div class="container">
+              <h2 class="page-title" style="margin-top:0;">Our Services</h2>
+              <p class="page-subtitle">Tailored discovery pathways designed for high-velocity growth and institutional collaboration.</p>
+
+              <div class="services-grid">
+                <!-- Startup Card -->
+                <div class="service-card">
+                  <div class="service-icon-tile" style="background: rgba(167, 139, 250, 0.18);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+                      <path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path>
+                      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path>
+                      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path>
+                    </svg>
+                  </div>
+                  <h3>Startup</h3>
+                  <p>Register once, discover active pilots, grants, and strategic angel/VC investors, apply in minutes, and track status live.</p>
+                  <button class="btn btn-sm btn-ghost" style="color:#ffffff; border-color:#334e55;" onclick="Views.openServiceModal('startup')">Know More</button>
+                </div>
+
+                <!-- Pilot Card -->
+                <div class="service-card">
+                  <div class="service-icon-tile" style="background: rgba(245, 158, 11, 0.18);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                    </svg>
+                  </div>
+                  <h3>Pilot</h3>
+                  <p>Run real-world paid pilots with established enterprise leaders to validate your technology with enterprise customers.</p>
+                  <button class="btn btn-sm btn-ghost" style="color:#ffffff; border-color:#334e55;" onclick="Views.openServiceModal('pilot')">Know More</button>
+                </div>
+
+                <!-- Grant Card -->
+                <div class="service-card">
+                  <div class="service-icon-tile" style="background: rgba(34, 197, 94, 0.18);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 21h18"></path>
+                      <path d="M3 10h18"></path>
+                      <path d="M5 6l7-3 7 3"></path>
+                      <path d="M4 10v11"></path>
+                      <path d="M20 10v11"></path>
+                      <path d="M8 14v4"></path>
+                      <path d="M12 14v4"></path>
+                      <path d="M16 14v4"></path>
+                    </svg>
+                  </div>
+                  <h3>Grant</h3>
+                  <p>Find non-dilutive central and state innovation schemes, check precise departmental eligibility, and secure public grants.</p>
+                  <button class="btn btn-sm btn-ghost" style="color:#ffffff; border-color:#334e55;" onclick="Views.openServiceModal('grant')">Know More</button>
+                </div>
+
+                <!-- Investment Card -->
+                <div class="service-card">
+                  <div class="service-icon-tile" style="background: rgba(13, 148, 136, 0.22);">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2dd4bf" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                      <polyline points="17 6 23 6 23 12"></polyline>
+                    </svg>
+                  </div>
+                  <h3>Investment</h3>
+                  <p>Reach institutional venture firms and syndicates in your sector, share executive pitch decks, and raise catalytic rounds.</p>
+                  <button class="btn btn-sm btn-ghost" style="color:#ffffff; border-color:#334e55;" onclick="Views.openServiceModal('investor')">Know More</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- HOW IT WORKS SECTION -->
+          <section class="how-section" id="how">
+            <div class="container">
+              <h2 class="page-title" style="margin-top:0;">How It Works</h2>
+              <p class="page-subtitle">A transparent 4-step framework connecting supply and demand for venture capital and enterprise contracts.</p>
+
+              <div class="how-grid">
+                <div class="how-card">
+                  <div class="step-badge">1</div>
+                  <h4>Register</h4>
+                  <p>Sign up in under 60 seconds as a Startup, Corporate Pilot Partner, Grant Body, or Investment Firm.</p>
+                </div>
+                <div class="how-card">
+                  <div class="step-badge">2</div>
+                  <h4>Publish or Search</h4>
+                  <p>Partners publish structured funding schemes; founders filter opportunities by sector, amount, and eligibility.</p>
+                </div>
+                <div class="how-card">
+                  <div class="step-badge">3</div>
+                  <h4>Apply</h4>
+                  <p>Submit customized proposals alongside pitch decks and compliance documents directly to decision-makers.</p>
+                </div>
+                <div class="how-card">
+                  <div class="step-badge">4</div>
+                  <h4>Track</h4>
+                  <p>Monitor real-time application states across Registered, Accepted, and Rejected with instantaneous updates.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        `;
+      },
+
+      openServiceModal(roleKey) {
+        const user = Auth.getCurrentUser();
+        let title = "";
+        let explanation = "";
+        let bullets = [];
+        let partnerRole = "";
+
+        if (roleKey === "startup") {
+          title = "Startup Acceleration & Fund Access";
+          explanation = "Built to give early-stage founders an unfair advantage in raising capital and commercial pilots.";
+          bullets = [
+            "Create a unified founder profile once with company details and location.",
+            "Explore thousands of open schemes across VC investment, grants, and corporate pilots.",
+            "Attach comprehensive slide decks and pitch dossiers directly without cold emails.",
+            "Receive transparent status notifications as decision-makers review your submissions."
+          ];
+        } else if (roleKey === "pilot") {
+          title = "Corporate Paid Pilots Program";
+          explanation = "Empowering market-leading enterprises to discover plug-and-play B2B startups for paid trials.";
+          bullets = [
+            "Publish open challenges across logistics, manufacturing, retail, and IT.",
+            "Specify pilot budget ranges (e.g. ₹5,00,000 - ₹10,00,000) and operational parameters.",
+            "Download and review detailed solution blueprints from qualified founders.",
+            "Accept high-potential candidates to initiate commercial integration agreements."
+          ];
+          partnerRole = "pilot";
+        } else if (roleKey === "grant") {
+          title = "Government & Institutional Grants";
+          explanation = "Facilitating non-dilutive public capital deployment to fuel indigenous technological self-reliance.";
+          bullets = [
+            "Publish state and central innovation schemes with clear departmental guidelines.",
+            "Define strict statutory eligibility parameters and grant amounts.",
+            "Access digital dossiers and DPIIT credentials of applying startups.",
+            "Drive auditable grant allocations with real-time acceptance workflows."
+          ];
+          partnerRole = "grant";
+        } else if (roleKey === "investor") {
+          title = "Venture Capital & Angel Syndicates";
+          explanation = "Streamlined deal-flow pipeline for micro-VCs, angel networks, and family offices.";
+          bullets = [
+            "Set targeted ticket sizes ranging from ₹20 Lakhs to ₹2.5 Crores.",
+            "Filter applicants by specific sector verticals such as Fintech, AgTech, or Clean Energy.",
+            "Inspect verified executive summaries and pitch decks from pre-screened founders.",
+            "Issue direct term-sheet evaluations and manage pipeline status effortlessly."
+          ];
+          partnerRole = "investor";
+        }
+
+        const bulletsHtml = bullets.map(b => `<li style="margin-bottom:8px;">${escapeHtml(b)}</li>`).join("");
+
+        let actionButtonsHtml = "";
+        if (user) {
+          actionButtonsHtml = `
+            <button class="btn btn-acc" onclick="Modal.close(); Router.navigate('${Auth.getDefaultRoute(user.role)}')">
+              Go to my dashboard
+            </button>
+          `;
+        } else {
+          let partnerBtn = "";
+          if (partnerRole === "investor") {
+            partnerBtn = `<button class="btn btn-acc" onclick="Modal.close(); Router.navigate('#/register/investor')">Register as an Investor</button>`;
+          } else if (partnerRole === "pilot") {
+            partnerBtn = `<button class="btn btn-acc" onclick="Modal.close(); Router.navigate('#/register/pilot')">Register as a Pilot partner</button>`;
+          } else if (partnerRole === "grant") {
+            partnerBtn = `<button class="btn btn-acc" onclick="Modal.close(); Router.navigate('#/register/grant')">Register as a Grant body</button>`;
+          }
+
+          actionButtonsHtml = `
+            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:20px;">
+              <button class="btn" onclick="Modal.close(); Router.navigate('#/register/startup')">Register as a Startup</button>
+              ${partnerBtn}
+              <button class="btn btn-ghost" onclick="Modal.close(); Router.navigate('#/login')">Login</button>
+            </div>
+          `;
+        }
+
+        const modalBody = `
+          <h2 style="font-size:24px; font-weight:800; color:var(--pri); margin-bottom:10px;">${escapeHtml(title)}</h2>
+          <p style="font-size:15px; color:var(--muted); margin-bottom:16px;">${escapeHtml(explanation)}</p>
+          <ul style="padding-left:20px; font-size:14px; color:#334155; line-height:1.6; margin-bottom:24px;">
+            ${bulletsHtml}
+          </ul>
+          ${actionButtonsHtml}
+        `;
+
+        Modal.open(modalBody);
+      },
+
+      /* -----------------------------------------------------------------------
+         8b. REGISTER VIEW
+         ----------------------------------------------------------------------- */
+      renderRegister(preselectedRole = "") {
+        const safeRole = ["startup", "pilot", "grant", "investor"].includes(preselectedRole.toLowerCase())
+          ? preselectedRole.toLowerCase()
+          : "startup";
+
+        Views.main.innerHTML = `
+          <div class="auth-page">
+            <div class="container" style="display:flex; justify-content:center;">
+              <div class="auth-card">
+                <!-- Left: Form -->
+                <div class="auth-card-left">
+                  <h2>Register</h2>
+                  <form id="register-form" onsubmit="Views.handleRegisterSubmit(event)">
+                    <!-- Name -->
+                    <div class="auth-input-wrap">
+                      <input type="text" class="auth-input" id="reg-name" placeholder="Full Name" required />
+                      <span class="auth-input-icon" title="ID Card">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                          <circle cx="9" cy="10" r="2"></circle>
+                          <line x1="15" y1="8" x2="17" y2="8"></line>
+                          <line x1="15" y1="12" x2="17" y2="12"></line>
+                          <line x1="7" y1="16" x2="17" y2="16"></line>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="auth-input-wrap">
+                      <input type="tel" class="auth-input" id="reg-phone" placeholder="Phone (10-14 digits)" pattern="[0-9]{10,14}" required />
+                      <span class="auth-input-icon" title="Phone">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="auth-input-wrap">
+                      <input type="email" class="auth-input" id="reg-email" placeholder="Email Address" required />
+                      <span class="auth-input-icon" title="Envelope">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                          <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="auth-input-wrap">
+                      <input type="password" class="auth-input" id="reg-pass" placeholder="Password (min 6 chars)" minlength="6" required />
+                      <span class="auth-input-icon" onclick="Views.togglePasswordVisibility('reg-pass', this)" title="Toggle Show/Hide">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- City -->
+                    <div class="auth-input-wrap">
+                      <input type="text" class="auth-input" id="reg-city" placeholder="City" required />
+                      <span class="auth-input-icon" title="Navigation">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- State -->
+                    <div class="auth-input-wrap">
+                      <input type="text" class="auth-input" id="reg-state" placeholder="State" required />
+                      <span class="auth-input-icon" title="Map Pin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                          <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- Pincode -->
+                    <div class="auth-input-wrap">
+                      <input type="text" class="auth-input" id="reg-pincode" placeholder="Pincode (6 digits)" pattern="[0-9]{6}" maxlength="6" required />
+                      <span class="auth-input-icon" title="Hash">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <line x1="4" y1="9" x2="20" y2="9"></line>
+                          <line x1="4" y1="15" x2="20" y2="15"></line>
+                          <line x1="10" y1="3" x2="8" y2="21"></line>
+                          <line x1="16" y1="3" x2="14" y2="21"></line>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- Role Select: Startup, Pilot, Grant, Investor (in that order) -->
+                    <div class="auth-input-wrap">
+                      <select class="auth-input" id="reg-role" required style="cursor:pointer;">
+                        <option value="startup" ${safeRole === 'startup' ? 'selected' : ''}>Startup</option>
+                        <option value="pilot" ${safeRole === 'pilot' ? 'selected' : ''}>Pilot</option>
+                        <option value="grant" ${safeRole === 'grant' ? 'selected' : ''}>Grant</option>
+                        <option value="investor" ${safeRole === 'investor' ? 'selected' : ''}>Investor</option>
+                      </select>
+                    </div>
+
+                    <button type="submit" class="auth-reg-btn">Register</button>
+
+                    <div style="text-align:center; margin-top:20px; font-size:14px; color:#64748b;">
+                      Already have an account? 
+                      <a href="#/login" style="color:var(--pri); font-weight:700;">Login</a>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="auth-card-right">
+                  <h3>Create an account</h3>
+                  <p class="lead">Believe you can, and you're halfway there.</p>
+                  <div class="sparkles">✦ ✦ ✦</div>
+
+                  <!-- SVG pale-teal circle with thick checkmark & amber dots -->
+                  <svg width="140" height="140" viewBox="0 0 140 140" fill="none" style="margin-top:10px;">
+                    <circle cx="70" cy="70" r="62" stroke="rgba(255,255,255,0.25)" stroke-width="4" stroke-dasharray="6 6"/>
+                    <circle cx="70" cy="70" r="50" fill="#ccfbf1"/>
+                    <path d="M52 70L65 83L90 55" stroke="#0d9488" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="28" cy="40" r="5" fill="#f59e0b"/>
+                    <circle cx="112" cy="98" r="6" fill="#f59e0b"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      togglePasswordVisibility(inputId, triggerEl) {
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        if (input.type === "password") {
+          input.type = "text";
+          triggerEl.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+          `;
+        } else {
+          input.type = "password";
+          triggerEl.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          `;
+        }
+      },
+
+      handleRegisterSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById("reg-name").value.trim();
+        const phone = document.getElementById("reg-phone").value.trim();
+        const email = document.getElementById("reg-email").value.trim().toLowerCase();
+        const pass = document.getElementById("reg-pass").value;
+        const city = document.getElementById("reg-city").value.trim();
+        const state = document.getElementById("reg-state").value.trim();
+        const pincode = document.getElementById("reg-pincode").value.trim();
+        const role = document.getElementById("reg-role").value;
+
+        if (!name || !email || !pass || !phone || !city || !state || !pincode) {
+          Toast.show("Please fill out all required fields", "bad");
+          return;
+        }
+
+        const data = Store.get();
+        const exists = data.users.find(u => u.email.toLowerCase() === email);
+        if (exists) {
+          Toast.show("This email is already registered. Please login.", "bad");
+          return;
+        }
+
+        const newUser = {
+          id: generateId("u"),
+          role,
+          name,
+          phone,
+          email,
+          pass,
+          city,
+          state,
+          pincode,
+          org: role === "startup" ? `${name}'s Venture` : `${name}'s Org`,
+          created: new Date().toISOString()
+        };
+
+        data.users.push(newUser);
+        Store.save(data);
+        Store.setSessionUserId(newUser.id);
+
+        Toast.show("Registration successful", "ok");
+        Router.navigate(Auth.getDefaultRoute(newUser.role));
+      },
+
+      /* -----------------------------------------------------------------------
+         8c. LOGIN VIEW
+         ----------------------------------------------------------------------- */
+      renderLogin() {
+        Views.main.innerHTML = `
+          <div class="auth-page">
+            <div class="container" style="display:flex; justify-content:center;">
+              <div class="auth-card">
+                <!-- Left: Login Form -->
+                <div class="auth-card-left">
+                  <h2>Login</h2>
+                  <form id="login-form" onsubmit="Views.handleLoginSubmit(event)">
+                    <!-- Email -->
+                    <div class="auth-input-wrap">
+                      <input type="email" class="auth-input" id="login-email" placeholder="Email Address" required />
+                      <span class="auth-input-icon" title="Envelope">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                          <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="auth-input-wrap">
+                      <input type="password" class="auth-input" id="login-pass" placeholder="Password" required />
+                      <span class="auth-input-icon" onclick="Views.togglePasswordVisibility('login-pass', this)" title="Toggle Show/Hide">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                          <circle cx="12" cy="12" r="3"></circle>
+                        </svg>
+                      </span>
+                    </div>
+
+                    <button type="submit" class="auth-reg-btn">Login</button>
+
+                    <div style="text-align:center; margin-top:20px; font-size:14px; color:#64748b; display:flex; flex-direction:column; gap:8px;">
+                      <div>
+                        New here? 
+                        <a href="#/register" style="color:var(--pri); font-weight:700;">Create an account</a>
+                      </div>
+                      <div>
+                        <a href="javascript:void(0)" onclick="Views.openForgotPasswordModal()" style="color:var(--muted); font-size:13.5px; text-decoration:underline;">Forgot password?</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Right Panel -->
+                <div class="auth-card-right">
+                  <h3>Welcome back</h3>
+                  <p class="lead">Track every pilot, grant and investment in one place.</p>
+                  
+                  <!-- Try a demo account box with 4 one-click buttons -->
+                  <div class="demo-accounts-box">
+                    <h4>Try a demo account</h4>
+                    <div class="demo-btn-grid">
+                      <button type="button" class="demo-btn" onclick="Views.fillDemoLogin('startup@demo.in')">
+                        Startup<br/><span style="font-size:10.5px; opacity:0.85;">startup@demo.in</span>
+                      </button>
+                      <button type="button" class="demo-btn" onclick="Views.fillDemoLogin('investor@demo.in')">
+                        Investor<br/><span style="font-size:10.5px; opacity:0.85;">investor@demo.in</span>
+                      </button>
+                      <button type="button" class="demo-btn" onclick="Views.fillDemoLogin('pilot@demo.in')">
+                        Pilot<br/><span style="font-size:10.5px; opacity:0.85;">pilot@demo.in</span>
+                      </button>
+                      <button type="button" class="demo-btn" onclick="Views.fillDemoLogin('grant@demo.in')">
+                        Grant<br/><span style="font-size:10.5px; opacity:0.85;">grant@demo.in</span>
+                      </button>
+                    </div>
+                    <div class="demo-pass-hint">Password: <strong>demo123</strong> (one-click pre-fills &amp; logs in)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      },
+
+      fillDemoLogin(email) {
+        const emailInput = document.getElementById("login-email");
+        const passInput = document.getElementById("login-pass");
+        if (emailInput && passInput) {
+          emailInput.value = email;
+          passInput.value = "demo123";
+          const user = Auth.login(email, "demo123");
+          if (user) {
+            Toast.show(`Logged in as ${user.name} (${user.role})`, "ok");
+            // Partners: if they have no schemes, go to Add page; else Applicants List
+            if (user.role === "startup") {
+              Router.navigate("#/apply");
+            } else {
+              const data = Store.get();
+              const schemes = data.schemes.filter(s => s.ownerId === user.id);
+              if (schemes.length === 0) {
+                Router.navigate("#/add");
+              } else {
+                Router.navigate("#/applicants");
+              }
+            }
+          }
+        }
+      },
+
+      handleLoginSubmit(e) {
+        e.preventDefault();
+        const email = document.getElementById("login-email").value.trim();
+        const pass = document.getElementById("login-pass").value;
+
+        const user = Auth.login(email, pass);
+        if (!user) {
+          Toast.show("Invalid email or password", "bad");
+          return;
+        }
+
+        Toast.show(`Welcome back, ${user.name}!`, "ok");
+        if (user.role === "startup") {
+          Router.navigate("#/apply");
+        } else {
+          const data = Store.get();
+          const schemes = data.schemes.filter(s => s.ownerId === user.id);
+          if (schemes.length === 0) {
+            Router.navigate("#/add");
+          } else {
+            Router.navigate("#/applicants");
+          }
+        }
+      },
+
+      openForgotPasswordModal() {
+        const modalHtml = `
+          <h3 style="font-size:22px; font-weight:700; color:var(--pri); margin-bottom:12px;">Forgot Password</h3>
+          <p style="font-size:14px; color:var(--muted); margin-bottom:16px;">
+            Enter your registered email address to reveal your password hint.
+          </p>
+          <div class="form-group">
+            <input type="email" id="forgot-email-input" placeholder="Enter your email" style="margin-bottom:12px;" />
+            <button class="btn" onclick="Views.checkPasswordHint()">Find Password</button>
+          </div>
+          <div id="forgot-hint-result" style="margin-top:12px; font-size:14px;"></div>
+        `;
+        Modal.open(modalHtml);
+      },
+
+      checkPasswordHint() {
+        const email = (document.getElementById("forgot-email-input").value || "").trim().toLowerCase();
+        const resultEl = document.getElementById("forgot-hint-result");
+        if (!email) {
+          resultEl.innerHTML = `<span style="color:var(--bad);">Please enter an email address.</span>`;
+          return;
+        }
+        const data = Store.get();
+        const user = data.users.find(u => u.email.toLowerCase() === email);
+        if (user) {
+          resultEl.innerHTML = `
+            <div style="background:var(--soft2); border:1px solid var(--soft); padding:12px; border-radius:6px; color:var(--ok);">
+              Found account for <strong>${escapeHtml(user.name)}</strong>.<br/>
+              Password is: <strong>${escapeHtml(user.pass)}</strong>
+            </div>
+          `;
+        } else {
+          resultEl.innerHTML = `<span style="color:var(--bad);">No account found with this email. Demo password is <strong>demo123</strong>.</span>`;
+        }
+      },
+
+      /* -----------------------------------------------------------------------
+         8d. PARTNER PAGES: ADD SCHEME ("Register your scheme")
+         ----------------------------------------------------------------------- */
+      renderAddScheme(user) {
+        const role = user.role;
+        const isGrant = role === "grant";
+        const pageTitle = isGrant ? "Register your grant or scheme" : "Register your scheme";
+
+        const btnText = role === "investor" ? "Add" : (role === "pilot" ? "Add Pilot" : "Add");
+
+        // Defaults: Pilot -> Logistics, Grant -> Agriculture, Investor -> Ecommerce
+        const defaultDept = role === "pilot" ? "Logistics" : (role === "grant" ? "Agriculture" : "Ecommerce");
+
+        // Pre-fill org name from user profile or last created scheme
+        const data = Store.get();
+        const userSchemes = data.schemes.filter(s => s.ownerId === user.id);
+        const lastScheme = userSchemes[userSchemes.length - 1];
+        const defaultCompany = (lastScheme && lastScheme.company) || user.org || user.name;
+
+        const deptOptionsHtml = DEPARTMENTS.map(d => `
+          <option value="${d}" ${d === defaultDept ? 'selected' : ''}>${d}</option>
+        `).join("");
+
+        Views.main.innerHTML = `
+          <div class="container" style="padding-top:20px;">
+            <h1 class="page-title">${pageTitle}</h1>
+
+            <div class="white-panel" style="max-width:860px; margin-left:auto; margin-right:auto;">
+              <form id="add-scheme-form" onsubmit="Views.handleAddSchemeSubmit(event, '${user.id}', '${role}')">
+                
+                <div class="grid-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                  
+                  <!-- Left Column -->
+                  <div>
+                    ${isGrant ? `
+                      <div class="form-group center-label">
+                        <label for="scheme-company">Government name</label>
+                        <input type="text" id="scheme-company" value="${escapeHtml(defaultCompany)}" required />
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-name">Scheme or Grant name</label>
+                        <input type="text" id="scheme-name" placeholder="e.g. National AgriTech Mission" required />
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-grant-kind">Type</label>
+                        <select id="scheme-grant-kind" style="border-bottom:3px solid var(--pri); text-align-last:center;">
+                          <option value="Grant" selected>Grant</option>
+                          <option value="Scheme">Scheme</option>
+                        </select>
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-dept">Department</label>
+                        <select id="scheme-dept" style="border-bottom:3px solid var(--pri); text-align-last:center;">
+                          ${deptOptionsHtml}
+                        </select>
+                      </div>
+                    ` : `
+                      <div class="form-group center-label">
+                        <label for="scheme-company">Company name</label>
+                        <input type="text" id="scheme-company" value="${escapeHtml(defaultCompany)}" required />
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-amount">Investment Range</label>
+                        <input type="text" id="scheme-amount" placeholder="e.g. 500000-2500000 or 2000000" required />
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-dept">Department</label>
+                        <select id="scheme-dept" style="border-bottom:3px solid var(--pri); text-align-last:center;">
+                          ${deptOptionsHtml}
+                        </select>
+                      </div>
+                    `}
+                  </div>
+
+                  <!-- Right Column -->
+                  <div>
+                    ${isGrant ? `
+                      <div class="form-group center-label">
+                        <label for="scheme-amount">Investment amount</label>
+                        <input type="text" id="scheme-amount" placeholder="e.g. 1000000" required />
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-desc">Brief Description</label>
+                        <textarea id="scheme-desc" placeholder="Detail the objectives and funding allocations" required style="min-height:90px;"></textarea>
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-eligibility">Eligibility</label>
+                        <textarea id="scheme-eligibility" placeholder="Specify requirements, DPIIT guidelines, stage" required style="min-height:90px;"></textarea>
+                      </div>
+                    ` : `
+                      <div class="form-group center-label">
+                        <label for="scheme-name">Scheme name</label>
+                        <input type="text" id="scheme-name" placeholder="e.g. Innovation Power" required />
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-desc">Brief Description</label>
+                        <textarea id="scheme-desc" placeholder="Detail your investment thesis or pilot objectives" required style="min-height:90px;"></textarea>
+                      </div>
+                      <div class="form-group center-label">
+                        <label for="scheme-eligibility">Eligibility</label>
+                        <textarea id="scheme-eligibility" placeholder="e.g. No age limit, MVP required" required style="min-height:90px;"></textarea>
+                      </div>
+                    `}
+                  </div>
+
+                </div>
+
+                <div style="text-align:center; margin-top:28px;">
+                  <button type="submit" class="btn btn-lg" style="min-width:200px;">${btnText}</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        `;
+      },
+
+      handleAddSchemeSubmit(e, ownerId, role) {
+        e.preventDefault();
+        const company = document.getElementById("scheme-company").value.trim();
+        const name = document.getElementById("scheme-name").value.trim();
+        const amount = document.getElementById("scheme-amount").value.trim();
+        const dept = document.getElementById("scheme-dept").value;
+        const desc = document.getElementById("scheme-desc").value.trim();
+        const eligibility = document.getElementById("scheme-eligibility").value.trim();
+        
+        let grantKind = undefined;
+        if (role === "grant") {
+          const kindEl = document.getElementById("scheme-grant-kind");
+          grantKind = kindEl ? kindEl.value : "Grant";
+        }
+
+        if (!company || !name || !amount || !desc || !eligibility) {
+          Toast.show("Please complete all scheme fields", "bad");
+          return;
+        }
+
+        const data = Store.get();
+        const newScheme = {
+          id: generateId("s"),
+          type: role,
+          ownerId,
+          company,
+          name,
+          amount,
+          dept,
+          desc,
+          eligibility,
+          grantKind,
+          created: new Date().toISOString()
+        };
+
+        data.schemes.unshift(newScheme);
+        Store.save(data);
+
+        Toast.show(`"${name}" added`, "ok");
+
+        // Go to Applicants List with this new scheme expanded
+        window.sessionStorage.setItem("expanded_scheme_id", newScheme.id);
+        Router.navigate("#/applicants");
+      },
+
+      /* -----------------------------------------------------------------------
+         8e. PARTNER PAGES: APPLICANTS LIST ("Your Registrations")
+         ----------------------------------------------------------------------- */
+      partnerFilterStatus: "all",
+      partnerSearchQuery: "",
+      expandedSchemes: new Set(),
+
+      renderApplicants(user) {
+        const data = Store.get();
+        // Schemes owned by this partner
+        const mySchemes = data.schemes.filter(s => s.ownerId === user.id);
+        const mySchemeIds = new Set(mySchemes.map(s => s.id));
+        const myApps = data.apps.filter(a => mySchemeIds.has(a.schemeId));
+
+        // Auto-expand last created if flagged
+        const autoExpand = window.sessionStorage.getItem("expanded_scheme_id");
+        if (autoExpand) {
+          Views.expandedSchemes.add(autoExpand);
+          window.sessionStorage.removeItem("expanded_scheme_id");
+        }
+
+        // Counts
+        const countSchemes = mySchemes.length;
+        const countNew = myApps.filter(a => a.status === "Registered").length;
+        const countAccepted = myApps.filter(a => a.status === "Accepted").length;
+        const countRejected = myApps.filter(a => a.status === "Rejected").length;
+
+        // Button text depending on role
+        const addBtnText = user.role === "investor" ? "+ Add Investment" : (user.role === "pilot" ? "+ Add Pilots" : "+ Add Grant");
+
+        // Filter and search
+        const q = Views.partnerSearchQuery.toLowerCase().trim();
+        const statusFilter = Views.partnerFilterStatus;
+
+        let schemesHtml = "";
+
+        if (mySchemes.length === 0) {
+          schemesHtml = `
+            <div class="empty-state">
+              You haven't registered any scheme yet. 
+              <br/><br/>
+              <button class="btn btn-acc" onclick="Router.navigate('#/add')">Add one now</button>
+            </div>
+          `;
+        } else {
+          schemesHtml = mySchemes.map(scheme => {
+            // Get all applications for this scheme
+            let schemeApps = myApps.filter(a => a.schemeId === scheme.id);
+            
+            // Apply status filter to applicants
+            if (statusFilter !== "all") {
+              schemeApps = schemeApps.filter(a => a.status === statusFilter);
+            }
+
+            // Apply search query (Search startup name)
+            if (q) {
+              schemeApps = schemeApps.filter(a => (a.startupName || "").toLowerCase().includes(q));
+            }
+
+            const totalApplicantsForScheme = myApps.filter(a => a.schemeId === scheme.id).length;
+            const isExpanded = Views.expandedSchemes.has(scheme.id);
+
+            // Amount pill
+            const amountFormatted = formatIndianCurrency(scheme.amount);
+
+            // Build Applicants Box
+            let applicantsSectionHtml = "";
+            if (isExpanded) {
+              if (schemeApps.length === 0) {
+                if (totalApplicantsForScheme === 0) {
+                  applicantsSectionHtml = `<div class="empty-state" style="padding:20px;">No applicants yet.</div>`;
+                } else {
+                  applicantsSectionHtml = `<div class="empty-state" style="padding:20px;">No applicants match this filter.</div>`;
+                }
+              } else {
+                applicantsSectionHtml = `
+                  <div class="applicants-container">
+                    ${schemeApps.map(app => {
+                      const appUser = data.users.find(u => u.id === app.userId) || {};
+                      const partnerCompanyLabel = user.role === "grant" ? "GOVERNMENT NAME" : (user.role === "pilot" ? "PILOT COMPANY" : "INVESTOR COMPANY");
+                      
+                      // Download link
+                      let downloadHtml = `<span style="color:#64748b; font-style:italic;">No document uploaded</span>`;
+                      if (app.fileData && app.fileName) {
+                        downloadHtml = `
+                          <a href="${app.fileData}" download="${escapeHtml(app.fileName)}" style="color:var(--pri); font-weight:700; text-decoration:underline; display:inline-flex; align-items:center; gap:4px;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            ${escapeHtml(app.fileName)}
+                          </a>
+                        `;
+                      } else if (app.fileName) {
+                        downloadHtml = `<span style="font-weight:600; color:var(--ink);">${escapeHtml(app.fileName)}</span>`;
+                      }
+
+                      const badgeClass = app.status === "Accepted" ? "badge-accepted" : (app.status === "Rejected" ? "badge-rejected" : "badge-registered");
+
+                      return `
+                        <div class="applicant-box">
+                          <div class="applicant-box-header">
+                            <span>APPLICANT ${escapeHtml(appUser.email || "founder@startup.io")}</span>
+                            <span class="badge ${badgeClass}">${app.status}</span>
+                          </div>
+                          
+                          <div class="applicant-row"><strong>CURRENT EMAIL</strong> &rarr; ${escapeHtml(appUser.email || "-")}</div>
+                          <div class="applicant-row"><strong>PHONE</strong> &rarr; ${escapeHtml(appUser.phone || "-")}</div>
+                          <div class="applicant-row"><strong>${partnerCompanyLabel}</strong> &rarr; ${escapeHtml(scheme.company)}</div>
+                          <div class="applicant-row"><strong>SCHEME NAME</strong> &rarr; ${escapeHtml(scheme.name)}</div>
+                          <div class="applicant-row"><strong>STARTUP DESCRIPTION</strong> &rarr; ${escapeHtml(app.desc || "-")}</div>
+                          <div class="applicant-row"><strong>DOWNLOAD STARTUP FILE</strong> &rarr; ${downloadHtml}</div>
+                          <div class="applicant-row"><strong>STARTUP NAME</strong> &rarr; ${escapeHtml(app.startupName || "-")}</div>
+                          <div class="applicant-row"><strong>APPLIED ON</strong> &rarr; ${formatIndianDate(app.created)}</div>
+
+                          <div class="applicant-actions-bar">
+                            <span class="badge ${badgeClass}">${app.status}</span>
+                            <div style="display:flex; gap:8px;">
+                              <button class="btn btn-sm btn-ok" ${app.status === "Accepted" ? "disabled" : ""} onclick="Views.updateAppStatus('${app.id}', 'Accepted')">
+                                Accept
+                              </button>
+                              <button class="btn btn-sm btn-bad" ${app.status === "Rejected" ? "disabled" : ""} onclick="Views.updateAppStatus('${app.id}', 'Rejected')">
+                                Reject
+                              </button>
+                              ${app.status !== "Registered" ? `
+                                <button class="btn btn-sm btn-ghost" onclick="Views.updateAppStatus('${app.id}', 'Registered')">
+                                  Undo
+                                </button>
+                              ` : ""}
+                            </div>
+                          </div>
+                        </div>
+                      `;
+                    }).join("")}
+                  </div>
+                `;
+              }
+            }
+
+            return `
+              <div class="scheme-block">
+                <div class="scheme-header">
+                  <div class="scheme-header-left">
+                    <div class="scheme-title-row">
+                      <h3>${escapeHtml(scheme.name)}</h3>
+                      <span class="pill pill-teal">${escapeHtml(scheme.dept)}</span>
+                      <span class="pill pill-amber">${escapeHtml(amountFormatted)}</span>
+                      ${scheme.grantKind ? `<span class="pill pill-green">${escapeHtml(scheme.grantKind)}</span>` : ""}
+                    </div>
+                    <div class="scheme-meta-info">
+                      <span>Added ${formatIndianDate(scheme.created)}</span>
+                      <span>&bull;</span>
+                      <span>Total Applicants: <strong>${totalApplicantsForScheme}</strong></span>
+                    </div>
+                  </div>
+
+                  <div class="scheme-actions">
+                    <button class="btn btn-sm" onclick="Views.toggleExpandScheme('${scheme.id}')">
+                      ${isExpanded ? `Hide Applicants (${totalApplicantsForScheme})` : `Expand Applicants (${totalApplicantsForScheme})`}
+                    </button>
+                    <button class="btn btn-sm btn-ghost" onclick="Views.openEditSchemeModal('${scheme.id}')">
+                      Edit
+                    </button>
+                    <button class="btn btn-sm btn-bad" onclick="Views.deleteSchemeConfirm('${scheme.id}')">
+                      Delete
+                    </button>
+                  </div>
+                </div>
+
+                <div class="scheme-body">
+                  <div class="scheme-kv-row"><strong>DEPARTMENT</strong> &rarr; ${escapeHtml(scheme.dept)}</div>
+                  <div class="scheme-kv-row"><strong>ELIGIBILITY</strong> &rarr; ${escapeHtml(scheme.eligibility)}</div>
+                  <div class="scheme-kv-row" style="margin-top:6px; color:#475569;">${escapeHtml(scheme.desc)}</div>
+                  ${applicantsSectionHtml}
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
+
+        Views.main.innerHTML = `
+          <div class="container" style="padding-top:20px;">
+            <h1 class="page-title">Your Registrations</h1>
+
+            <!-- 4 Count Cards -->
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-number">${countSchemes}</div>
+                <div class="stat-label">Schemes published</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">${countNew}</div>
+                <div class="stat-label">New applications (Registered)</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">${countAccepted}</div>
+                <div class="stat-label">Accepted</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">${countRejected}</div>
+                <div class="stat-label">Rejected</div>
+              </div>
+            </div>
+
+    /* APPLICANTS LIST (Partner View) */
+    .toolbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .scheme-block {
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      background: #ffffff;
+    }
+    .scheme-header {
+      background: var(--soft2);
+      padding: 16px 20px;
+      border-bottom: 1.5px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .scheme-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .scheme-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .scheme-title-row h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .scheme-meta-info {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .scheme-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .scheme-body {
+      padding: 20px;
+    }
+    .scheme-kv-row {
+      font-size: 13.5px;
+      margin-bottom: 8px;
+      color: #334155;
+    }
+    .scheme-kv-row strong {
+      color: var(--ink);
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* Applicant Item inside Scheme */
+    .applicants-container {
+      margin-top: 18px;
+      border-top: 1.5px dashed var(--line);
+      padding-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .applicant-box {
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 16px 18px;
+      background: #f8fafc;
+    }
+    .applicant-box-header {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--pri);
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .applicant-row {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #334155;
+      margin-bottom: 5px;
+    }
+    .applicant-row strong {
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .applicant-actions-bar {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+      updateAppStatus(appId, newStatus) {
+        const data = Store.get();
+        const app = data.apps.find(a => a.id === appId);
+        if (!app) return;
+        app.status = newStatus;
+        app.updated = new Date().toISOString();
+        Store.save(data);
+        Toast.show(`Application status updated to ${newStatus}`, newStatus === "Accepted" ? "ok" : (newStatus === "Rejected" ? "bad" : "pri"));
+        const user = Auth.getCurrentUser();
+        if (user) Views.renderApplicants(user);
+      },
+
+      deleteSchemeConfirm(schemeId) {
+        const data = Store.get();
+        const scheme = data.schemes.find(s => s.id === schemeId);
+        if (!scheme) return;
+
+        if (confirm(`Are you sure you want to delete "${scheme.name}"? This will also remove all its applications.`)) {
+          data.schemes = data.schemes.filter(s => s.id !== schemeId);
+          data.apps = data.apps.filter(a => a.schemeId !== schemeId);
+          Store.save(data);
+          Views.expandedSchemes.delete(schemeId);
+          Toast.show(`Scheme "${scheme.name}" deleted`, "warn");
+          const user = Auth.getCurrentUser();
+          if (user) Views.renderApplicants(user);
+        }
+      },
+
+      openEditSchemeModal(schemeId) {
+        const data = Store.get();
+        const scheme = data.schemes.find(s => s.id === schemeId);
+        if (!scheme) return;
+
+        const isGrant = scheme.type === "grant";
+        const deptOptionsHtml = DEPARTMENTS.map(d => `
+          <option value="${d}" ${d === scheme.dept ? 'selected' : ''}>${d}</option>
+        `).join("");
+
+        const modalHtml = `
+          <h2 style="font-size:22px; font-weight:800; color:var(--pri); margin-bottom:18px;">Edit Scheme</h2>
+          <form onsubmit="Views.handleEditSchemeSubmit(event, '${scheme.id}')">
+            <div class="form-group">
+              <label>Company / Government name</label>
+              <input type="text" id="edit-scheme-company" value="${escapeHtml(scheme.company)}" required />
+            </div>
+            <div class="form-group">
+              <label>Scheme name</label>
+              <input type="text" id="edit-scheme-name" value="${escapeHtml(scheme.name)}" required />
+            </div>
+            ${isGrant ? `
+              <div class="form-group">
+                <label>Type</label>
+                <select id="edit-scheme-grant-kind">
+                  <option value="Grant" ${scheme.grantKind === 'Grant' ? 'selected' : ''}>Grant</option>
+                  <option value="Scheme" ${scheme.grantKind === 'Scheme' ? 'selected' : ''}>Scheme</option>
+                </select>
+              </div>
+            ` : ""}
+            <div class="form-group">
+              <label>Investment amount / Range</label>
+              <input type="text" id="edit-scheme-amount" value="${escapeHtml(scheme.amount)}" required />
+            </div>
+            <div class="form-group">
+              <label>Department</label>
+              <select id="edit-scheme-dept">
+                ${deptOptionsHtml}
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Brief Description</label>
+              <textarea id="edit-scheme-desc" required>${escapeHtml(scheme.desc)}</textarea>
+            </div>
+            <div class="form-group">
+              <label>Eligibility</label>
+              <textarea id="edit-scheme-eligibility" required>${escapeHtml(scheme.eligibility)}</textarea>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+              <button type="button" class="btn btn-ghost" onclick="Modal.close()">Cancel</button>
+              <button type="submit" class="btn">Save Changes</button>
+            </div>
+          </form>
+        `;
+        Modal.open(modalHtml);
+      },
+
+      handleEditSchemeSubmit(e, schemeId) {
+        e.preventDefault();
+        const data = Store.get();
+        const scheme = data.schemes.find(s => s.id === schemeId);
+        if (!scheme) return;
+
+        scheme.company = document.getElementById("edit-scheme-company").value.trim();
+        scheme.name = document.getElementById("edit-scheme-name").value.trim();
+        scheme.amount = document.getElementById("edit-scheme-amount").value.trim();
+        scheme.dept = document.getElementById("edit-scheme-dept").value;
+        scheme.desc = document.getElementById("edit-scheme-desc").value.trim();
+        scheme.eligibility = document.getElementById("edit-scheme-eligibility").value.trim();
+
+        if (scheme.type === "grant") {
+          const kindEl = document.getElementById("edit-scheme-grant-kind");
+          if (kindEl) scheme.grantKind = kindEl.value;
+        }
+
+        Store.save(data);
+        Modal.close();
+        Toast.show("Scheme updated successfully", "ok");
+        const user = Auth.getCurrentUser();
+        if (user) Views.renderApplicants(user);
+      },
+
+      /* -----------------------------------------------------------------------
+         8f. STARTUP: FUND APPLICATION (`#/apply`) - SEARCH
+         ----------------------------------------------------------------------- */
+      startupSelectedType: "investor",
+      startupSelectedIndustry: "All industries",
+
+      renderFundApplication(user) {
+        const data = Store.get();
+        const userType = Views.startupSelectedType;
+        const industry = Views.startupSelectedIndustry;
+
+        // Filter schemes
+        let results = data.schemes.filter(s => s.type === userType);
+        if (industry !== "All industries") {
+          results = results.filter(s => s.dept === industry);
+        }
+
+        const deptSelectOptions = ["All industries", ...DEPARTMENTS].map(dep => `
+          <option value="${dep}" ${dep === industry ? 'selected' : ''}>${dep}</option>
+        `).join("");
+
+        // Build result cards
+        let resultsHtml = "";
+        if (results.length === 0) {
+          resultsHtml = `
+            <div style="grid-column: 1 / -1;">
+              <div class="empty-state">
+                No ${escapeHtml(userType)} schemes found for ${escapeHtml(industry)}. Try another industry.
+              </div>
+            </div>
+          `;
+        } else {
+          resultsHtml = results.map(scheme => {
+            const hasApplied = data.apps.find(a => a.schemeId === scheme.id && a.userId === user.id);
+            const borderClass = scheme.type === "pilot" ? "border-pilot" : (scheme.type === "grant" ? "border-grant" : "border-investor");
+            const typeLabel = scheme.type.toUpperCase();
+
+            let actionHtml = "";
+            if (hasApplied) {
+              const badgeClass = hasApplied.status === "Accepted" ? "badge-accepted" : (hasApplied.status === "Rejected" ? "badge-rejected" : "badge-registered");
+              actionHtml = `
+                <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+                  <span class="badge ${badgeClass}">${hasApplied.status}</span>
+                  <button class="btn btn-sm btn-ghost" onclick="Router.navigate('#/status')">View status</button>
+                </div>
+              `;
+            } else {
+              actionHtml = `
+                <button class="btn btn-sm" style="width:100%;" onclick="Router.navigate('#/form/${scheme.id}')">Apply</button>
+              `;
+            }
+
+            return `
+              <div class="scheme-search-card ${borderClass}">
+                <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                  <span class="pill pill-teal">${typeLabel}</span>
+                  <span class="pill">${escapeHtml(scheme.dept)}</span>
+                  ${scheme.grantKind ? `<span class="pill pill-green">${escapeHtml(scheme.grantKind)}</span>` : ""}
+                </div>
+
+                <h3>${escapeHtml(scheme.name)}</h3>
+                <div class="scheme-company-name">${escapeHtml(scheme.company)}</div>
+
+                <div>
+                  <span class="scheme-amount-highlight">
+                    Investment range / Amount: ${escapeHtml(formatIndianCurrency(scheme.amount))}
+                  </span>
+                </div>
+
+                <p>${escapeHtml(scheme.desc)}</p>
+                <p style="font-size:13px; color:#64748b; margin-top:auto;"><strong>Eligibility:</strong> ${escapeHtml(scheme.eligibility)}</p>
+
+                <div class="scheme-card-footer">
+                  ${actionHtml}
+                </div>
+              </div>
+            `;
+          }).join("");
+        }
+
+        Views.main.innerHTML = `
+          <div class="container" style="padding-top:20px;">
+            <div class="white-panel search-panel">
+              <h2 style="color:var(--pri); font-weight:800; font-size:28px;">Application form</h2>
+              <p style="color:var(--muted); font-size:14.5px; margin-top:4px;">
+                Discover tailored investment tranches, commercial pilot partners, and state innovation grants.
+              </p>
+
+              <div class="search-controls">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label>Select user type:</label>
+                  <select id="search-user-type">
+                    <option value="investor" ${userType === 'investor' ? 'selected' : ''}>Investor</option>
+                    <option value="pilot" ${userType === 'pilot' ? 'selected' : ''}>Pilot</option>
+                    <option value="grant" ${userType === 'grant' ? 'selected' : ''}>Grant</option>
+                  </select>
+                </div>
+
+                <div class="form-group" style="margin-bottom:0;">
+                  <label>Select industry:</label>
+                  <select id="search-industry">
+                    ${deptSelectOptions}
+                  </select>
+                </div>
+
+                <button class="btn" style="height:44px;" onclick="Views.handleSearchClick()">
+                  Search
+                </button>
+              </div>
+            </div>
+
+            <div class="results-grid">
+              ${resultsHtml}
+            </div>
+          </div>
+        `;
+      },
+
+      handleSearchClick() {
+        const typeEl = document.getElementById("search-user-type");
+        const indEl = document.getElementById("search-industry");
+        if (typeEl && indEl) {
+          Views.startupSelectedType = typeEl.value;
+          Views.startupSelectedIndustry = indEl.value;
+          const user = Auth.getCurrentUser();
+          if (user) Views.renderFundApplication(user);
+        }
+      },
+
+      /* -----------------------------------------------------------------------
+         8g. STARTUP: APPLICATION FORM (`#/form/<schemeId>`)
+         ----------------------------------------------------------------------- */
+      renderApplicationForm(user, schemeId) {
+        const data = Store.get();
+        const scheme = data.schemes.find(s => s.id === schemeId);
+
+        if (!scheme) {
+          Toast.show("Scheme not found", "bad");
+          Router.navigate("#/apply");
+          return;
+        }
+
+        // Check if already applied
+        const existingApp = data.apps.find(a => a.schemeId === scheme.id && a.userId === user.id);
+
+        const defaultStartupName = user.org || user.name;
+        const amountFormatted = formatIndianCurrency(scheme.amount);
+
+        let formOrStatusHtml = "";
+
+        if (existingApp) {
+          const badgeClass = existingApp.status === "Accepted" ? "badge-accepted" : (existingApp.status === "Rejected" ? "badge-rejected" : "badge-registered");
+          formOrStatusHtml = `
+            <div style="text-align:center; padding:30px 10px;">
+              <div style="font-size:18px; font-weight:700; color:var(--ink); margin-bottom:12px;">
+                You have already submitted an application for this scheme.
+              </div>
+              <div style="margin-bottom:20px;">
+                Current Status: <span class="badge ${badgeClass}">${existingApp.status}</span>
+              </div>
+              <div style="font-size:14px; color:var(--muted); margin-bottom:24px;">
+                Applied on: ${formatIndianDate(existingApp.created)}
+              </div>
+              <button class="btn btn-acc" onclick="Router.navigate('#/status')">Go to Status</button>
+            </div>
+          `;
+        } else {
+          formOrStatusHtml = `
+            <form id="apply-scheme-form" onsubmit="Views.handleApplySubmit(event, '${user.id}', '${scheme.id}')">
+              <div class="form-group center-label">
+                <label for="app-startup-name">Startup Name:</label>
+                <input type="text" id="app-startup-name" value="${escapeHtml(defaultStartupName)}" required />
+              </div>
+
+              <div class="form-group center-label">
+                <label for="app-desc">Description:</label>
+                <textarea id="app-desc" placeholder="Detail your solution, current metrics, and alignment with the scheme" required style="min-height:120px;"></textarea>
+              </div>
+
+              <div class="form-group center-label">
+                <label for="app-file">Upload document:</label>
+                <input type="file" id="app-file" accept=".pdf,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg" style="padding:8px;" />
+                <span style="font-size:12px; color:var(--muted); text-align:center; margin-top:4px;">
+                  Accepts PDF, DOC, DOCX, PPT, PPTX, PNG, JPG (up to 1.5 MB stored with data)
+                </span>
+              </div>
+
+              <div style="text-align:center; margin-top:24px;">
+                <button type="submit" class="btn btn-lg" style="min-width:200px;">Submit</button>
+              </div>
+
+              <div style="text-align:center; margin-top:16px;">
+                <a href="#/apply" style="color:var(--muted); font-size:14px; font-weight:600;">&larr; Back to search</a>
+              </div>
+            </form>
+          `;
+        }
+
+        Views.main.innerHTML = `
+          <div class="container" style="padding-top:20px;">
+            <div class="white-panel" style="max-width:800px; margin:0 auto 40px;">
+              <h1 style="color:var(--pri); font-weight:800; font-size:32px; text-align:center; margin-bottom:20px;">
+                Application form
+              </h1>
+
+              <!-- Scheme Summary Dark Box -->
+              <div class="scheme-summary-box">
+                <h3>${escapeHtml(scheme.name)} &bull; ${escapeHtml(scheme.company)}</h3>
+                <div style="display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap;">
+                  <span class="pill pill-teal" style="background:#0f766e; color:#ffffff;">${scheme.type.toUpperCase()}</span>
+                  <span class="pill pill-amber">${escapeHtml(scheme.dept)}</span>
+                  <span class="pill" style="background:rgba(255,255,255,0.2); color:#ffffff;">${escapeHtml(amountFormatted)}</span>
+                </div>
+                <div style="font-size:13.5px; color:#cfe3e1; margin-bottom:6px;">
+                  <strong>Eligibility:</strong> ${escapeHtml(scheme.eligibility)}
+                </div>
+                <div style="font-size:13.5px; color:#94a3b8;">
+                  ${escapeHtml(scheme.desc)}
+                </div>
+              </div>
+
+              ${formOrStatusHtml}
+            </div>
+          </div>
+        `;
+      },
+
+      handleApplySubmit(e, userId, schemeId) {
+        e.preventDefault();
+        const startupName = document.getElementById("app-startup-name").value.trim();
+        const desc = document.getElementById("app-desc").value.trim();
+        const fileInput = document.getElementById("app-file");
+
+        if (!startupName || !desc) {
+          Toast.show("Please complete startup name and description", "bad");
+          return;
+        }
+
+        const data = Store.get();
+        // Double submission prevention
+        const existing = data.apps.find(a => a.schemeId === schemeId && a.userId === userId);
+        if (existing) {
+          Toast.show("You have already applied to this scheme", "warn");
+          Router.navigate("#/status");
+          return;
+        }
+
+        const file = fileInput.files && fileInput.files[0];
+
+        const saveAndRedirect = (fileName, fileData) => {
+          const newApp = {
+            id: generateId("app"),
+            schemeId,
+            userId,
+            startupName,
+            desc,
+            fileName: fileName || "",
+            fileData: fileData || "",
+            status: "Registered",
+            created: new Date().toISOString(),
+            updated: new Date().toISOString()
+          };
+
+          data.apps.unshift(newApp);
+          Store.save(data);
+
+          Toast.show("Application submitted successfully", "ok");
+          Router.navigate("#/status");
+        };
+
+        if (file) {
+          const fileName = file.name;
+          const maxBytes = 1.5 * 1024 * 1024; // 1.5 MB
+          if (file.size <= maxBytes) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              saveAndRedirect(fileName, reader.result);
+            };
+            reader.onerror = () => {
+              saveAndRedirect(fileName, "");
+            };
+            reader.readAsDataURL(file);
+          } else {
+            // Larger files keep only name
+            Toast.show("File exceeds 1.5 MB; attaching file name only", "warn");
+            saveAndRedirect(fileName, "");
+          }
+        } else {
+          saveAndRedirect("", "");
+        }
+      },
+
+      /* -----------------------------------------------------------------------
+         8h. STARTUP: STATUS PAGE (`#/status`)
+         ----------------------------------------------------------------------- */
+      renderStatus(user) {
+        const data = Store.get();
+        // All applications submitted by this startup
+        const myApps = data.apps.filter(a => a.userId === user.id);
+
+        const totalCount = myApps.length;
+        const regCount = myApps.filter(a => a.status === "Registered").length;
+        const accCount = myApps.filter(a => a.status === "Accepted").length;
+        const rejCount = myApps.filter(a => a.status === "Rejected").length;
+
+        // Group by scheme type: pilot, grant, investor
+        const renderTableForType = (typeKey) => {
+          const typeApps = myApps.filter(app => {
+            const scheme = data.schemes.find(s => s.id === app.schemeId);
+            return scheme && scheme.type === typeKey;
+          });
+
+          if (typeApps.length === 0) {
+            return `
+              <div class="status-table-wrap">
+                <table class="status-table">
+                  <thead>
+                    <tr>
+                      <th>Company name</th>
+                      <th>Scheme name</th>
+                      <th>Start up name</th>
+                      <th>Applied on</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="5" style="text-align:center; padding:24px; color:var(--muted); font-style:italic;">
+                        No ${typeKey} applications yet
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            `;
+          }
+
+          const rows = typeApps.map(app => {
+            const scheme = data.schemes.find(s => s.id === app.schemeId) || {};
+            const badgeClass = app.status === "Accepted" ? "badge-accepted" : (app.status === "Rejected" ? "badge-rejected" : "badge-registered");
+            return `
+              <tr>
+                <td><strong>${escapeHtml(scheme.company || "-")}</strong></td>
+                <td>${escapeHtml(scheme.name || "-")}</td>
+                <td>${escapeHtml(app.startupName || "-")}</td>
+                <td>${formatIndianDate(app.created)}</td>
+                <td><span class="badge ${badgeClass}">${app.status}</span></td>
+              </tr>
+            `;
+          }).join("");
+
+          return `
+            <div class="status-table-wrap">
+              <table class="status-table">
+                <thead>
+                  <tr>
+                    <th>Company name</th>
+                    <th>Scheme name</th>
+                    <th>Start up name</th>
+                    <th>Applied on</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows}
+                </tbody>
+              </table>
+            </div>
+          `;
+        };
+
+        Views.main.innerHTML = `
+          <div class="container" style="padding-top:20px;">
+            <h1 class="page-title">Your Registrations</h1>
+
+            <!-- 4 Count Cards -->
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-number">${totalCount}</div>
+                <div class="stat-label">Total Applications</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">${regCount}</div>
+                <div class="stat-label">Registered</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">${accCount}</div>
+                <div class="stat-label">Accepted</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">${rejCount}</div>
+                <div class="stat-label">Rejected</div>
+              </div>
+            </div>
+
+            <!-- Pilot Applications -->
+            <div class="status-section">
+              <h2>Pilot Applications</h2>
+              ${renderTableForType("pilot")}
+            </div>
+
+            <!-- Grant Applications -->
+            <div class="status-section">
+              <h2>Grant Applications</h2>
+              ${renderTableForType("grant")}
+            </div>
+
+            <!-- Investor Applications -->
+            <div class="status-section">
+              <h2>Investor Applications</h2>
+              ${renderTableForType("investor")}
+            </div>
+
+            <div style="text-align:center; margin:36px 0 60px;">
+              <button class="btn btn-acc btn-lg" onclick="Router.navigate('#/apply')">
+                Apply for more funding
+              </button>
+            </div>
+          </div>
+        `;
+      },
+
+      /* -----------------------------------------------------------------------
+         8i. PROFILE VIEW (All roles)
+         ----------------------------------------------------------------------- */
+      renderProfile(user) {
+        const data = Store.get();
+        const role = user.role;
+        const initials = (user.name || "U").split(" ").map(w => w[0]).join("").toUpperCase().slice(0, 2);
+
+        // Stats line
+        let statLine = "";
+        if (role === "startup") {
+          const count = data.apps.filter(a => a.userId === user.id).length;
+          statLine = `${count} applications submitted`;
+        } else {
+          const mySchemes = data.schemes.filter(s => s.ownerId === user.id);
+          const schemeIds = new Set(mySchemes.map(s => s.id));
+          const appCount = data.apps.filter(a => schemeIds.has(a.schemeId)).length;
+          statLine = `${mySchemes.length} schemes published &bull; ${appCount} applicants`;
+        }
+
+        const orgLabel = role === "startup" 
+          ? "Startup name" 
+          : (role === "grant" ? "Government or department name" : "Company name");
+
+        Views.main.innerHTML = `
+          <div class="container" style="padding-top:20px;">
+            <h1 class="page-title">Profile</h1>
+
+            <div class="white-panel" style="max-width:860px; margin:0 auto 40px;">
+              <!-- Profile Header Card -->
+              <div class="profile-header-card">
+                <div class="profile-avatar">${initials}</div>
+                <div class="profile-info">
+                  <h3>${escapeHtml(user.name)}</h3>
+                  <div class="profile-role-date">${user.role} &bull; Member since ${formatIndianDate(user.created)}</div>
+                  <div class="profile-stats-pill">${statLine}</div>
+                </div>
+              </div>
+
+              <!-- Editable Form -->
+              <form id="profile-form" onsubmit="Views.handleProfileSave(event, '${user.id}')">
+                <div class="profile-grid-form">
+                  
+                  <div class="form-group">
+                    <label for="prof-name">Name</label>
+                    <input type="text" id="prof-name" value="${escapeHtml(user.name)}" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prof-org">${orgLabel}</label>
+                    <input type="text" id="prof-org" value="${escapeHtml(user.org || '')}" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prof-email">Email (read-only)</label>
+                    <input type="email" id="prof-email" value="${escapeHtml(user.email)}" disabled />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prof-phone">Phone</label>
+                    <input type="tel" id="prof-phone" value="${escapeHtml(user.phone)}" pattern="[0-9]{10,14}" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prof-city">City</label>
+                    <input type="text" id="prof-city" value="${escapeHtml(user.city)}" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prof-state">State</label>
+                    <input type="text" id="prof-state" value="${escapeHtml(user.state)}" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prof-pincode">Pincode</label>
+                    <input type="text" id="prof-pincode" value="${escapeHtml(user.pincode)}" pattern="[0-9]{6}" maxlength="6" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="prof-role">Role (read-only)</label>
+                    <input type="text" id="prof-role" value="${user.role.toUpperCase()}" disabled />
+                  </div>
+
+                  <div class="form-group" style="grid-column: 1 / -1;">
+                    <label for="prof-newpass">New password (optional)</label>
+                    <input type="password" id="prof-newpass" placeholder="Leave blank to keep existing password" minlength="6" />
+                  </div>
+
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:28px; padding-top:20px; border-top:1.5px solid var(--line);">
+                  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button type="submit" class="btn">Save changes</button>
+                    <button type="button" class="btn btn-ghost" onclick="Auth.logout()">Logout</button>
+                  </div>
+
+                  <button type="button" class="btn btn-sm btn-bad" onclick="Views.resetDemoDataConfirm()">
+                    Reset demo data
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        `;
+      },
+
+      handleProfileSave(e, userId) {
+        e.preventDefault();
+        const data = Store.get();
+        const user = data.users.find(u => u.id === userId);
+        if (!user) return;
+
+        user.name = document.getElementById("prof-name").value.trim();
+        user.org = document.getElementById("prof-org").value.trim();
+        user.phone = document.getElementById("prof-phone").value.trim();
+        user.city = document.getElementById("prof-city").value.trim();
+        user.state = document.getElementById("prof-state").value.trim();
+        user.pincode = document.getElementById("prof-pincode").value.trim();
+
+        const newPass = document.getElementById("prof-newpass").value;
+        if (newPass && newPass.trim().length >= 6) {
+          user.pass = newPass.trim();
+        }
+
+        Store.save(data);
+        Toast.show("Profile updated successfully", "ok");
+        Views.renderProfile(user);
+      },
+
+      resetDemoDataConfirm() {
+        if (confirm("Are you sure you want to restore the platform seed data? All custom registrations and applications will be reset.")) {
+          Store.resetSeedData();
+          Toast.show("Platform restored to default seed data", "warn");
+          // Re-log into the default startup account or reload
+          const curUser = Auth.getCurrentUser();
+          if (curUser) {
+            Views.renderProfile(curUser);
+          } else {
+            Router.navigate("#/home");
+          }
+        }
+      }
+    };
+
+    /* =========================================================================
+       9. BOOTSTRAP APPLICATION
+       ========================================================================= */
+    window.addEventListener("DOMContentLoaded", () => {
+      Router.init();
+    });
+  </script>
+</body>
+</html>
