@@ -170,6 +170,7 @@ export const LoginView = () => {
           <div className="auth-card-right">
             <h3>Welcome back</h3>
             <p className="lead">Track every pilot, grant and investment in one place.</p>
+            <div className="sparkles" style={{ color: "#ffc107" }}>✦ ✦</div>
 
             {/* Try a demo account box */}
             <div className="demo-accounts-box">

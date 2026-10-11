@@ -9,9 +9,14 @@ export const ApplyView = () => {
   const [selectedType, setSelectedType] = useState("investor");
   const [selectedIndustry, setSelectedIndustry] = useState("All industries");
 
+  const standardDepts = DEPARTMENTS.filter((d) => d !== "Others");
+
   // Filter schemes
   let results = data.schemes.filter((s) => s.type === selectedType);
-  if (selectedIndustry !== "All industries") {
+  if (selectedIndustry === "Others") {
+    // Search with "Others" returns schemes whose department is NOT in the standard list or is explicitly "Others"
+    results = results.filter((s) => !standardDepts.includes(s.dept));
+  } else if (selectedIndustry !== "All industries") {
     results = results.filter((s) => s.dept === selectedIndustry);
   }
 
@@ -50,7 +55,7 @@ export const ApplyView = () => {
               <option value="All industries">All industries</option>
               {DEPARTMENTS.map((dept) => (
                 <option key={dept} value={dept}>
-                  {dept}
+                  {dept === "Others" ? "Others (any other industry)" : dept}
                 </option>
               ))}
             </select>

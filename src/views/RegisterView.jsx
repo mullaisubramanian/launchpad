@@ -352,33 +352,31 @@ export const RegisterView = ({ initialRole = "startup" }) => {
           <div className="auth-card-right">
             <h3>Create an account</h3>
             <p className="lead">Believe you can, and you're halfway there.</p>
-            <div className="sparkles">✦ ✦ ✦</div>
+            <div className="sparkles" style={{ color: "#ffc107" }}>✦ ✦</div>
 
+            {/* Large light-blue thumbs-up SVG with #9ec5fe shading */}
             <svg
-              width="140"
-              height="140"
-              viewBox="0 0 140 140"
+              width="150"
+              height="150"
+              viewBox="0 0 160 160"
               fill="none"
+              xmlns="http://www.w3.org/2000/svg"
               style={{ marginTop: "10px" }}
             >
-              <circle
-                cx="70"
-                cy="70"
-                r="62"
-                stroke="rgba(255,255,255,0.25)"
-                strokeWidth="4"
-                strokeDasharray="6 6"
-              />
-              <circle cx="70" cy="70" r="50" fill="#ccfbf1" />
-              <path
-                d="M52 70L65 83L90 55"
-                stroke="#0d9488"
-                strokeWidth="9"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="28" cy="40" r="5" fill="#f59e0b" />
-              <circle cx="112" cy="98" r="6" fill="#f59e0b" />
+              {/* Cuff/Sleeve */}
+              <rect x="25" y="85" width="28" height="55" rx="6" fill="#9ec5fe" />
+              <rect x="22" y="80" width="34" height="12" rx="4" fill="#6ea8fe" />
+              
+              {/* Hand Palm */}
+              <path d="M53 92H115C124 92 131 99 130 108L126 138C125 145 119 150 112 150H53V92Z" fill="#cfe2ff" stroke="#9ec5fe" strokeWidth="2.5" />
+              
+              {/* Fingers */}
+              <line x1="53" y1="106" x2="120" y2="106" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
+              <line x1="53" y1="120" x2="118" y2="120" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
+              <line x1="53" y1="134" x2="114" y2="134" stroke="#9ec5fe" strokeWidth="2" strokeLinecap="round" />
+
+              {/* Upright Thumb */}
+              <path d="M53 92L68 50C72 38 85 30 96 36C104 40 106 50 102 58L92 82C90 86 93 92 98 92H110" fill="#cfe2ff" stroke="#9ec5fe" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
         </div>

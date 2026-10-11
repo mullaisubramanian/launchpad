@@ -1,4 +1,4 @@
-export const BRAND = "LaunchBridge";
+export const BRAND = "1STOP";
 export const STORAGE_KEY = "launchbridge_platform_v2";
 export const SESSION_KEY = "launchbridge_platform_session";
 

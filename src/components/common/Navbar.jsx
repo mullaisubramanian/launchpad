@@ -97,21 +97,9 @@ export const Navbar = () => {
           onClick={handleLogoClick}
         >
           <div className="logo-mark">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M4 17L9 12L13 15L19 7"
-                stroke="#ffffff"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M14 7H19V12"
-                stroke="#f59e0b"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" stroke="#ffffff" strokeWidth="2.5" />
+              <text x="20" y="27" fontFamily="Poppins, sans-serif" fontWeight="800" fontSize="22" fill="#ffffff" textAnchor="middle">1</text>
             </svg>
           </div>
           <span className="logo-text">{BRAND}</span>

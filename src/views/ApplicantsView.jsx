@@ -412,22 +412,29 @@ export const ApplicantsView = () => {
 
 const EditSchemeModal = ({ scheme, onSave, onCancel }) => {
   const isGrant = scheme.type === "grant";
+  const isStandardDept = DEPARTMENTS.filter(d => d !== "Others").includes(scheme.dept);
+
   const [company, setCompany] = useState(scheme.company);
   const [name, setName] = useState(scheme.name);
   const [amount, setAmount] = useState(scheme.amount);
-  const [dept, setDept] = useState(scheme.dept);
+  const [dept, setDept] = useState(isStandardDept ? scheme.dept : "Others");
+  const [customIndustry, setCustomIndustry] = useState(isStandardDept ? "" : scheme.dept);
   const [desc, setDesc] = useState(scheme.desc);
   const [eligibility, setEligibility] = useState(scheme.eligibility);
   const [grantKind, setGrantKind] = useState(scheme.grantKind || "Grant");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const finalDept = dept === "Others" ? customIndustry.trim() : dept;
+    if (dept === "Others" && !customIndustry.trim()) {
+      return;
+    }
     onSave({
       ...scheme,
       company: company.trim(),
       name: name.trim(),
       amount: amount.trim(),
-      dept,
+      dept: finalDept,
       desc: desc.trim(),
       eligibility: eligibility.trim(),
       grantKind: isGrant ? grantKind : undefined
@@ -496,6 +503,18 @@ const EditSchemeModal = ({ scheme, onSave, onCancel }) => {
             ))}
           </select>
         </div>
+        {dept === "Others" && (
+          <div className="form-group">
+            <label>Type your industry</label>
+            <input
+              type="text"
+              placeholder="Type your industry"
+              value={customIndustry}
+              onChange={(e) => setCustomIndustry(e.target.value)}
+              required
+            />
+          </div>
+        )}
         <div className="form-group">
           <label>Brief Description</label>
           <textarea

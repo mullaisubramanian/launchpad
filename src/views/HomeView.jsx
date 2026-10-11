@@ -208,104 +208,70 @@ export const HomeView = () => {
           <div className="hero-left">
             <div className="hero-tag">Choose your service and scheme</div>
             <h1 className="hero-headline">
-              Track your progress <span className="amber-text">every second</span>
+              Track your progress every second
             </h1>
             <button
-              className="btn btn-acc btn-lg"
+              className="btn btn-lg"
+              style={{ borderRadius: "6px" }}
               onClick={() => {
                 const el = document.getElementById("services");
                 if (el) el.scrollIntoView({ behavior: "smooth" });
               }}
             >
               Discover more
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
             </button>
           </div>
 
           <div className="hero-right">
-            {/* SVG Illustration */}
+            {/* Flat unDraw-style tree with swing and reader */}
             <svg
               className="hero-illustration"
-              viewBox="0 0 440 380"
+              viewBox="0 0 480 380"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               {/* Ground line */}
-              <line
-                x1="20"
-                y1="330"
-                x2="420"
-                y2="330"
-                stroke="#1f3a40"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
+              <line x1="20" y1="340" x2="460" y2="340" stroke="#3a4047" strokeWidth="2.5" strokeLinecap="round" />
+              
+              {/* Tree trunk & branches in dark purple #3f3d56 */}
+              <path d="M140 340C140 300 135 250 150 200C165 150 180 130 220 100C260 70 310 65 370 70" stroke="#3f3d56" strokeWidth="18" strokeLinecap="round" fill="none" />
+              <path d="M145 340C148 290 152 240 135 210C118 180 90 165 60 155" stroke="#3f3d56" strokeWidth="12" strokeLinecap="round" fill="none" />
+              <path d="M180 160C205 135 230 130 270 140" stroke="#3f3d56" strokeWidth="9" strokeLinecap="round" fill="none" />
+              <path d="M260 85C290 80 340 105 380 130" stroke="#3f3d56" strokeWidth="9" strokeLinecap="round" fill="none" />
+              <path d="M210 105C230 75 250 50 290 40" stroke="#3f3d56" strokeWidth="8" strokeLinecap="round" fill="none" />
 
-              {/* 4 Teal Bar Columns */}
-              <rect x="50" y="240" width="46" height="90" rx="6" fill="#134e4a" />
-              <rect x="115" y="195" width="46" height="135" rx="6" fill="#115e59" />
-              <rect x="180" y="145" width="46" height="185" rx="6" fill="#0f766e" />
-              <rect x="245" y="90" width="46" height="240" rx="6" fill="#0d9488" />
+              {/* ~8 Teal leaves #2bb3a3 */}
+              <ellipse cx="60" cy="150" rx="14" ry="7" fill="#2bb3a3" transform="rotate(-25 60 150)" />
+              <ellipse cx="100" cy="168" rx="13" ry="6" fill="#2bb3a3" transform="rotate(30 100 168)" />
+              <ellipse cx="280" cy="138" rx="15" ry="7" fill="#2bb3a3" transform="rotate(-15 280 138)" />
+              <ellipse cx="295" cy="38" rx="14" ry="7" fill="#2bb3a3" transform="rotate(20 295 38)" />
+              <ellipse cx="375" cy="68" rx="15" ry="7" fill="#2bb3a3" transform="rotate(-10 375 68)" />
+              <ellipse cx="390" cy="132" rx="14" ry="7" fill="#2bb3a3" transform="rotate(35 390 132)" />
+              <ellipse cx="330" cy="95" rx="13" ry="6" fill="#2bb3a3" transform="rotate(-30 330 95)" />
+              <ellipse cx="235" cy="70" rx="14" ry="7" fill="#2bb3a3" transform="rotate(15 235 70)" />
 
-              {/* Sprout in amber pot */}
-              <path d="M60 330L63 312H83L86 330H60Z" fill="#f59e0b" />
-              <path
-                d="M73 312V296"
-                stroke="#2dd4bf"
-                strokeWidth="2.8"
-                strokeLinecap="round"
-              />
-              <path
-                d="M73 302C66 300 62 292 64 286C72 288 73 298 73 302Z"
-                fill="#2dd4bf"
-              />
-              <path
-                d="M73 298C80 295 85 287 83 281C75 282 73 294 73 298Z"
-                fill="#2dd4bf"
-              />
+              {/* Swing ropes hanging from branch at x=280 and x=310, y=140 */}
+              <line x1="285" y1="140" x2="285" y2="255" stroke="#6c757d" strokeWidth="2" />
+              <line x1="315" y1="138" x2="315" y2="255" stroke="#6c757d" strokeWidth="2" />
+              {/* Swing wooden plank */}
+              <rect x="275" y="255" width="50" height="6" rx="2" fill="#d97706" />
 
-              {/* Amber Growth Line */}
-              <path
-                d="M68 220L138 175L203 130L268 70"
-                stroke="#f59e0b"
-                strokeWidth="4.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <polygon points="268,60 278,74 260,78" fill="#f59e0b" />
-
-              {/* Rocket Group */}
-              <g transform="translate(20, -10)">
-                <path
-                  className="flame-anim"
-                  d="M284 172C281 184 290 196 290 196C290 196 299 184 296 172Z"
-                  fill="#f97316"
-                />
-                <path
-                  d="M290 112C282 126 278 148 278 168H302C302 148 298 126 290 112Z"
-                  fill="#ffffff"
-                />
-                <circle
-                  cx="290"
-                  cy="144"
-                  r="5"
-                  fill="#0d9488"
-                  stroke="#ffffff"
-                  strokeWidth="1.8"
-                />
-                <path d="M278 152L266 168H278V152Z" fill="#f59e0b" />
-                <path d="M302 152L314 168H302V152Z" fill="#f59e0b" />
-              </g>
+              {/* Person sitting on the swing reading a green book */}
+              {/* Legs hanging down */}
+              <path d="M295 258L290 295L296 315" stroke="#3f3d56" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M305 258L308 295L318 315" stroke="#3f3d56" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+              {/* Torso */}
+              <path d="M295 220C295 220 290 258 298 258C306 258 312 258 312 220Z" fill="#0d6efd" />
+              {/* Head */}
+              <circle cx="302" cy="202" r="11" fill="#fed7aa" />
+              {/* Hair */}
+              <path d="M295 200C295 192 312 190 312 200C312 195 304 193 295 200Z" fill="#2b3035" />
+              {/* Arms holding the book */}
+              <path d="M298 230L282 242L288 250" stroke="#fed7aa" strokeWidth="4" strokeLinecap="round" fill="none" />
+              <path d="M308 230L295 244" stroke="#fed7aa" strokeWidth="4" strokeLinecap="round" fill="none" />
+              {/* Open green book */}
+              <path d="M276 242L286 248L286 258L276 252Z" fill="#198754" />
+              <path d="M286 248L296 242L296 252L286 258Z" fill="#20c997" />
             </svg>
           </div>
         </div>
@@ -348,14 +314,13 @@ export const HomeView = () => {
             <div className="service-card">
               <div
                 className="service-icon-tile"
-                style={{ background: "rgba(167, 139, 250, 0.18)" }}
               >
                 <svg
                   width="32"
                   height="32"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#a78bfa"
+                  stroke="#0d6efd"
                   strokeWidth="2.3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -368,12 +333,11 @@ export const HomeView = () => {
               </div>
               <h3>Startup</h3>
               <p>
-                Register once, discover active pilots, grants, and strategic
-                angel/VC investors, apply in minutes, and track status live.
+                Register once, discover pilots, grants and investors, apply in
+                minutes, and track every application.
               </p>
               <button
-                className="btn btn-sm btn-ghost"
-                style={{ color: "#ffffff", borderColor: "#334e55" }}
+                className="btn btn-sm"
                 onClick={() => openServiceModal("startup")}
               >
                 Know More
@@ -384,14 +348,13 @@ export const HomeView = () => {
             <div className="service-card">
               <div
                 className="service-icon-tile"
-                style={{ background: "rgba(245, 158, 11, 0.18)" }}
               >
                 <svg
                   width="32"
                   height="32"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#f59e0b"
+                  stroke="#0d6efd"
                   strokeWidth="2.3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -402,12 +365,10 @@ export const HomeView = () => {
               </div>
               <h3>Pilot</h3>
               <p>
-                Run real-world paid pilots with established enterprise leaders to
-                validate your technology with enterprise customers.
+                Run a real-world paid pilot with an established company.
               </p>
               <button
-                className="btn btn-sm btn-ghost"
-                style={{ color: "#ffffff", borderColor: "#334e55" }}
+                className="btn btn-sm"
                 onClick={() => openServiceModal("pilot")}
               >
                 Know More
@@ -418,14 +379,13 @@ export const HomeView = () => {
             <div className="service-card">
               <div
                 className="service-icon-tile"
-                style={{ background: "rgba(34, 197, 94, 0.18)" }}
               >
                 <svg
                   width="32"
                   height="32"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#22c55e"
+                  stroke="#0d6efd"
                   strokeWidth="2.3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -442,12 +402,10 @@ export const HomeView = () => {
               </div>
               <h3>Grant</h3>
               <p>
-                Find non-dilutive central and state innovation schemes, check
-                precise departmental eligibility, and secure public grants.
+                Find central/state government grants, check eligibility and apply.
               </p>
               <button
-                className="btn btn-sm btn-ghost"
-                style={{ color: "#ffffff", borderColor: "#334e55" }}
+                className="btn btn-sm"
                 onClick={() => openServiceModal("grant")}
               >
                 Know More
@@ -458,14 +416,13 @@ export const HomeView = () => {
             <div className="service-card">
               <div
                 className="service-icon-tile"
-                style={{ background: "rgba(13, 148, 136, 0.22)" }}
               >
                 <svg
                   width="32"
                   height="32"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#2dd4bf"
+                  stroke="#0d6efd"
                   strokeWidth="2.3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -476,12 +433,10 @@ export const HomeView = () => {
               </div>
               <h3>Investment</h3>
               <p>
-                Reach institutional venture firms and syndicates in your sector,
-                share executive pitch decks, and raise catalytic rounds.
+                Reach investors in your industry and share your pitch and document.
               </p>
               <button
-                className="btn btn-sm btn-ghost"
-                style={{ color: "#ffffff", borderColor: "#334e55" }}
+                className="btn btn-sm"
                 onClick={() => openServiceModal("investor")}
               >
                 Know More

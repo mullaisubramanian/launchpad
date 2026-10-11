@@ -1,4 +1,4 @@
-# LaunchBridge - Full-Stack Node.js & React Platform
+# 1STOP – Pilots, Grants & Investment for Startups
 
 A high-velocity platform connecting early-stage startups with investors, enterprise corporate pilots, and government grants. Built as a full-stack **Node.js product** with an Express REST API backend and a Vite + React frontend.
 

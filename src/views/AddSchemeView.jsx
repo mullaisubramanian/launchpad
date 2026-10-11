@@ -34,6 +34,7 @@ export const AddSchemeView = () => {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [dept, setDept] = useState(defaultDept);
+  const [customIndustry, setCustomIndustry] = useState("");
   const [desc, setDesc] = useState("");
   const [eligibility, setEligibility] = useState("");
   const [grantKind, setGrantKind] = useState("Grant");
@@ -41,12 +42,15 @@ export const AddSchemeView = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const finalDept = dept === "Others" ? customIndustry.trim() : dept;
+
     if (
       !company.trim() ||
       !name.trim() ||
       !amount.trim() ||
       !desc.trim() ||
-      !eligibility.trim()
+      !eligibility.trim() ||
+      (dept === "Others" && !customIndustry.trim())
     ) {
       showToast("Please complete all scheme fields", "bad");
       return;
@@ -60,7 +64,7 @@ export const AddSchemeView = () => {
       company: company.trim(),
       name: name.trim(),
       amount: amount.trim(),
-      dept,
+      dept: finalDept,
       desc: desc.trim(),
       eligibility: eligibility.trim(),
       grantKind: isGrant ? grantKind : undefined,
@@ -151,6 +155,19 @@ export const AddSchemeView = () => {
                       ))}
                     </select>
                   </div>
+                  {dept === "Others" && (
+                    <div className="form-group center-label" style={{ marginTop: "12px" }}>
+                      <label htmlFor="custom-industry">Type your industry</label>
+                      <input
+                        type="text"
+                        id="custom-industry"
+                        placeholder="Type your industry"
+                        value={customIndustry}
+                        onChange={(e) => setCustomIndustry(e.target.value)}
+                        required
+                      />
+                    </div>
+                  )}
                 </>
               ) : (
                 <>
@@ -193,6 +210,19 @@ export const AddSchemeView = () => {
                       ))}
                     </select>
                   </div>
+                  {dept === "Others" && (
+                    <div className="form-group center-label" style={{ marginTop: "12px" }}>
+                      <label htmlFor="custom-industry">Type your industry</label>
+                      <input
+                        type="text"
+                        id="custom-industry"
+                        placeholder="Type your industry"
+                        value={customIndustry}
+                        onChange={(e) => setCustomIndustry(e.target.value)}
+                        required
+                      />
+                    </div>
+                  )}
                 </>
               )}
             </div>

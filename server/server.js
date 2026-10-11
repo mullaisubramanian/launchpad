@@ -30,7 +30,7 @@ db.read();
 app.get("/api/health", (req, res) => {
   res.json({
     status: "healthy",
-    product: "LaunchBridge Platform API",
+    product: "1STOP Platform API",
     timestamp: new Date().toISOString()
   });
 });
@@ -52,7 +52,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.listen(PORT, () => {
   console.log(`===============================================`);
-  console.log(`🚀 LaunchBridge Node.js Server listening on port ${PORT}`);
+  console.log(`🚀 1STOP Node.js Server listening on port ${PORT}`);
   console.log(`🔗 API Base: http://localhost:${PORT}/api`);
   console.log(`===============================================`);
 });
